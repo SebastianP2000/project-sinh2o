@@ -1,0 +1,144 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0" version="24.7.15">
+  <diagram name="Página-1" id="nWLG7lNp42WIRt6Slofu">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TXARMitppGOekWoNEKqO-1" value="Interfaz" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="40" width="100" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="H3cCl5--4MaUO_eVsSf0-51" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="TXARMitppGOekWoNEKqO-1">
+          <mxGeometry x="45" y="250" width="10" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-9" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="TXARMitppGOekWoNEKqO-1">
+          <mxGeometry x="45" y="310" width="10" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TXARMitppGOekWoNEKqO-8" value="Capa de negocio" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="600" y="40" width="100" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="H3cCl5--4MaUO_eVsSf0-38" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="TXARMitppGOekWoNEKqO-8">
+          <mxGeometry x="45" y="220" width="10" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TXARMitppGOekWoNEKqO-13" value="Base de datos" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="820" y="40" width="100" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-7" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="TXARMitppGOekWoNEKqO-13">
+          <mxGeometry x="45" y="280" width="10" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TXARMitppGOekWoNEKqO-16" value="Usuario" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="190" y="40" width="100" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-8" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;9.- Guardar cambios&lt;/span&gt;" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.68;exitY=-0.003;exitDx=0;exitDy=0;exitPerimeter=0;fontStyle=1" edge="1" parent="TXARMitppGOekWoNEKqO-16" target="TXARMitppGOekWoNEKqO-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="44.99999999999994" y="308.5" as="sourcePoint" />
+            <mxPoint as="offset" />
+            <mxPoint x="248.2" y="310" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="450" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3cCl5--4MaUO_eVsSf0-35" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="445" y="160" width="10" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="H3cCl5--4MaUO_eVsSf0-36" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="445" y="190" width="10" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="H3cCl5--4MaUO_eVsSf0-43" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="235" y="160" width="10" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="H3cCl5--4MaUO_eVsSf0-44" value="1.- Iniciar aplicacion" style="html=1;verticalAlign=bottom;endArrow=block;entryX=0;entryY=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.68;exitY=-0.003;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="241.79999999999995" y="160" as="sourcePoint" />
+            <mxPoint as="offset" />
+            <mxPoint x="445" y="161.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3cCl5--4MaUO_eVsSf0-45" value="3.- Seleccionar modificar disp." style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.96;exitY=0.118;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry x="-0.0435" y="-20" relative="1" as="geometry">
+            <mxPoint x="244.60000000000002" y="190.01" as="sourcePoint" />
+            <mxPoint x="449.5" y="190" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3cCl5--4MaUO_eVsSf0-46" value="2.- Desp. apartado menu" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=-0.08;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry x="0.0028" y="1" relative="1" as="geometry">
+            <mxPoint x="444.20000000000005" y="179" as="sourcePoint" />
+            <mxPoint x="245" y="179" as="targetPoint" />
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="340" y="179" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-1" value="4.- Desp. apart. interfaz de mod." style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=-0.08;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry x="0.0028" y="1" relative="1" as="geometry">
+            <mxPoint x="445" y="221" as="sourcePoint" />
+            <mxPoint x="246" y="221" as="targetPoint" />
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="341" y="221" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-2" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="445" y="240" width="10" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-3" value="5.- Agregar o eliminar sensor" style="html=1;verticalAlign=bottom;endArrow=block;entryX=0;entryY=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.68;exitY=-0.003;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="245.79999999999995" y="239" as="sourcePoint" />
+            <mxPoint as="offset" />
+            <mxPoint x="449" y="240.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-4" value="6.- Validar datos" style="html=1;verticalAlign=bottom;endArrow=block;entryX=0;entryY=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.68;exitY=-0.003;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="448.79999999999995" y="259" as="sourcePoint" />
+            <mxPoint as="offset" />
+            <mxPoint x="652" y="260.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-5" value="7.- Seleccionar cambios" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=-0.08;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry x="0.0028" y="1" relative="1" as="geometry">
+            <mxPoint x="650" y="289" as="sourcePoint" />
+            <mxPoint x="451" y="289" as="targetPoint" />
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="546" y="289" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-6" value="8.- Aplicar cambios" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=-0.08;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry x="0.0028" y="1" relative="1" as="geometry">
+            <mxPoint x="445" y="314" as="sourcePoint" />
+            <mxPoint x="246" y="314" as="targetPoint" />
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="341" y="314" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-10" value="10.- Ajustar cambios" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=-0.08;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" target="TXARMitppGOekWoNEKqO-1">
+          <mxGeometry x="0.0028" y="1" relative="1" as="geometry">
+            <mxPoint x="869" y="350" as="sourcePoint" />
+            <mxPoint x="670" y="350" as="targetPoint" />
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="765" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1LPhOpTJhxetsSfTDAT-11" value="11.- Notificacion de cambios" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=-0.08;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry x="0.0028" y="1" relative="1" as="geometry">
+            <mxPoint x="445" y="380" as="sourcePoint" />
+            <mxPoint x="246" y="380" as="targetPoint" />
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="341" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

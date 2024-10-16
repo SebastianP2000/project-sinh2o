@@ -1,0 +1,42 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 OPR/112.0.0.0" version="24.7.13">
+  <diagram name="Página-1" id="Xpb2gb1LNHp8RqmCmmBw">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-1" value="" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="70" y="390" width="540" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rMhbaUhpgZVaWxrgnAYL-2" target="rMhbaUhpgZVaWxrgnAYL-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="575" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-2" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="545" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rMhbaUhpgZVaWxrgnAYL-7" target="rMhbaUhpgZVaWxrgnAYL-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-7" value="Iniciar sesión" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="545" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rMhbaUhpgZVaWxrgnAYL-9" target="rMhbaUhpgZVaWxrgnAYL-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-9" value="Despliegue de menu" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="440" width="110" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rMhbaUhpgZVaWxrgnAYL-11" target="rMhbaUhpgZVaWxrgnAYL-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-11" value="Seleccionar modulo para ver" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="358.5" y="540" width="110" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="rMhbaUhpgZVaWxrgnAYL-12" value="Ver registro de humedad del modulo" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="540" width="110" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
