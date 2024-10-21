@@ -1,0 +1,66 @@
+ion-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinea todo el contenido hacia la parte superior */
+    align-items: center; /* Centra los elementos horizontalmente */
+    height: 100vh; /* Asegura que el contenido ocupe toda la altura de la pantalla */
+    padding-top: 20px; /* Ajusta este valor según lo que quieras */
+    position: relative; /* Asegura que el contenido no se salga de la pantalla */
+
+  }
+
+ion-grid {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 70px;
+}
+
+ion-button {
+    height: 100px;
+    font-size: 18px;
+    --border-radius: 10px;
+}
+ion-header {
+    --background: transparent; /* Quitar el fondo por defecto del toolbar */
+    display: flex;
+    justify-content: center; /* Centrar el título */
+    align-items: center;
+    padding-top: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+ion-toolbar {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+ion-title {
+    font-size: 24px; /* Aumentar tamaño de la fuente */
+    font-weight: bold;
+    color: #ffffff; /* Color del texto */
+    text-transform: uppercase; /* Cambiar el texto a mayúsculas */
+}
+
+.background-image {
+  position: absolute; /* Coloca la imagen detrás de otros elementos */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Hace que la imagen cubra todo el contenedor */
+  z-index: -1; /* Envía la imagen al fondo */
+}
+
+.v1_4 {
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 42, 52, 0.9); /* Color azul oscuro con opacidad */
+  position: absolute; /* Coloca el filtro en la parte superior */
+  top: 0; /* Alineado al inicio */
+  left: 0; /* Alineado al inicio */
+  z-index: 0; /* Asegura que el filtro esté sobre la imagen de fondo */
+}

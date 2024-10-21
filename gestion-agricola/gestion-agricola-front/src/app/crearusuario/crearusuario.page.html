@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="navigateBack()">Volver</ion-button>
+    </ion-buttons>
+    <ion-title>Crear Usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="register-page">
+
+  <img src="../../assets/img/background.png" class="background-image" />
+  <div class="v1_4"></div>
+
+  <form (ngSubmit)="crearUsuario()"> <!-- Agregamos el evento ngSubmit -->
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-md="6" size-lg="4">
+          <ion-item class="input-item">
+            <ion-label position="floating">Nombre de Usuario</ion-label>
+            <ion-input type="text" [(ngModel)]="usuario.nombreusuario" name="nombreusuario" required></ion-input>
+          </ion-item>
+
+          <ion-item class="input-item">
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" [(ngModel)]="usuario.email" name="email" required></ion-input>
+          </ion-item>
+
+          <ion-item class="input-item">
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="password" [(ngModel)]="usuario.contrasena" name="contrasena" required></ion-input>
+          </ion-item>
+
+          <ion-row class="ion-justify-content-between button-row">
+            <ion-col size="12">
+              <ion-button expand="full" color="primary" type="submit">
+                Crear Usuario
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

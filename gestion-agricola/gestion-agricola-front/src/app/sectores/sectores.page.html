@@ -1,0 +1,113 @@
+<ion-header [translucent]="true">
+  <ion-buttons slot="start">
+    <ion-button fill="clear" (click)="navigateBack()">Volver</ion-button>
+  </ion-buttons>
+  <!-- Agregar logo en la esquina superior derecha -->
+  <img src="../../assets/icon/Logo.png" alt="Logo" class="logo-image" />
+</ion-header>
+<ion-content>
+  <ion-content>
+    <img src="../../assets/img/background.png" class="background-image" />
+    <div class="v1_4"></div>
+
+    <!-- Título de Cuadrantes -->
+    <div class="v1_307 centered-title">
+      <div class="v1_308"></div>
+      <span class="v1_309">Zonas de irrigación</span>
+    </div>
+
+    <!-- Espacio antes de la tabla -->
+    <div class="extra-space"></div>
+
+    <!-- Tabla de Cuadrantes -->
+    <ion-item-group>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th *ngFor="let letra of letras">{{ letra }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let fila of filas; let i = index" [attr.data-fila]="fila">
+              <td>{{ i + 1 }}</td>
+              <td *ngFor="let letra of letras; let j = index" [attr.data-letra]="letra">
+                <ion-button fill="outline" (click)="showDetails('Sector ' + letra + fila)">
+                  {{ letra }}{{ fila }}
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ion-item-group>
+
+    <!-- Mostrar detalles del cuadrante -->
+    <div *ngIf="selectedCuadrante" class="cuadrante-details centered-card">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title [ngClass]="{'highlight': selectedCuadrante.nombre === selectedCuadrante.nombre}">
+            Detalles de {{ selectedCuadrante.nombre }}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p *ngIf="selectedCuadrante.ultima_irrigacion"><strong>Última Irrigación:</strong> {{ selectedCuadrante.ultima_irrigacion | date }}</p>
+          <p *ngIf="selectedCuadrante.fecha_sensor_agregado"><strong>Fecha Sensor Agregado:</strong> {{ selectedCuadrante.fecha_sensor_agregado | date }}</p>
+          <p *ngIf="selectedCuadrante.tipo_planta"><strong>Tipo de Planta:</strong> {{ selectedCuadrante.tipo_planta }}</p>
+          <!-- Mensaje de no disponible -->
+          <div *ngIf="!selectedCuadrante.ultima_irrigacion && !selectedCuadrante.fecha_sensor_agregado && !selectedCuadrante.tipo_planta && !selectedCuadrante.sensor">
+            <p>No hay información disponible para este cuadrante</p>
+          </div>
+        </ion-card-content>
+        <!-- Botón para cerrar la información -->
+        <ion-button fill="outline" size="small" (click)="closeDetails()">Cerrar Información</ion-button>
+      </ion-card>
+    </div>
+
+    <!-- Título de Estanques -->
+    <div class="v1_346">
+      <div class="v1_347"></div>
+    
+      <ion-button class="v1_350" *ngFor="let estanque of estanques" (click)="toggleEstanqueDetails(estanque.nombre)">
+        {{ estanque.nombre }} 
+        <!-- Mostrar capacidad máxima y actual en el botón -->
+        <span *ngIf="estanque.capacidad_maxima"> (Capacidad: {{ estanque.capacidad_maxima }})</span>
+      </ion-button>
+    
+      <span class="v1_352">Capacidad</span>
+    </div>
+    <div class="v1_348"></div>
+    <div class="v1_351"></div>
+
+<!-- Mostrar detalles del estanque -->
+  <div *ngIf="selectedEstanque" class="estanque centered-card">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title [ngClass]="{'highlight': selectedEstanque.nombre === selectedEstanque.nombre}">
+          Detalles de {{ selectedEstanque.nombre }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p *ngIf="selectedEstanque.capacidad_maxima">
+          <strong>Capacidad Máxima:</strong> {{ selectedEstanque.capacidad_maxima }}
+        </p>
+        <p *ngIf="selectedEstanque.capacidad_actual">
+          <strong>Capacidad Actual:</strong> {{ selectedEstanque.capacidad_actual }}
+        </p>
+
+        <!-- Mensaje de no disponible -->
+        <div *ngIf="!selectedEstanque.capacidad_maxima && !selectedEstanque.capacidad_actual">
+          <p>No hay información disponible para este estanque.</p>
+        </div>
+      </ion-card-content>
+      <!-- Botón para cerrar la información -->
+      <ion-button fill="outline" size="small" (click)="closeDetailsE()">Cerrar Información</ion-button>
+    </ion-card>
+  </div>
+
+</ion-content>
+
+
+
+

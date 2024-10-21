@@ -1,0 +1,7 @@
+{
+  "name": "gestion-agricola",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

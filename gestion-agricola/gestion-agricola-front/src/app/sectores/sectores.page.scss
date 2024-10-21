@@ -1,0 +1,267 @@
+.title-label {
+  text-align: center;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+.table-container {
+  display: flex;                /* Usamos flexbox para centrar */
+  justify-content: center;      /* Centra horizontalmente */
+  align-items: center;          /* Centra verticalmente */
+  margin: 16px 0;               /* Margen alrededor del contenedor */
+  background: transparent;      /* Asegura que el fondo del contenedor sea transparente */
+}
+
+table {
+  border-collapse: collapse;    /* Para que las celdas no tengan espacio entre ellas */
+  width: auto;                  /* Ajusta el ancho automáticamente */
+  max-width: 90%;               /* Limita el ancho máximo de la tabla */
+  margin: 0 auto;               /* Centra la tabla */
+  background: transparent !important; /* Fondo de la tabla transparente */
+}
+
+th, td {
+  padding: 10px;                /* Espaciado interno en celdas */
+  text-align: center;           /* Centra el texto en las celdas */
+  background: transparent !important; /* Fondo de celdas transparente */
+}
+
+.highlight {
+  color: green;                /* Aplica color verde al nombre del cuadrante seleccionado */
+}
+
+.background-image {
+  position: absolute; /* Coloca la imagen detrás de otros elementos */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Hace que la imagen cubra todo el contenedor */
+  z-index: -1; /* Envía la imagen al fondo */
+}
+
+.v1_4 {
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 42, 52, 0.9); /* Color azul oscuro con opacidad */
+  position: absolute; /* Coloca el filtro en la parte superior */
+  top: 0; /* Alineado al inicio */
+  left: 0; /* Alineado al inicio */
+  z-index: 0; /* Asegura que el filtro esté sobre la imagen de fondo */
+}
+
+.v1_307 {
+  width: 413px;
+  height: 78px;
+  background: url("./sectores.page.html");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 720px;
+  overflow: hidden;
+}
+
+.v1_308 {
+  width: 413px;
+  height: 78px;
+  background: rgba(8,25,32,0.5);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  border: 1px solid rgba(49,146,234,1);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  overflow: hidden;
+}
+.v1_309 {
+  width: 390px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 16px;
+  left: 17px;
+  font-family: Inter;
+  font-weight: Extra Bold;
+  font-size: 36px;
+  opacity: 1;
+  text-align: center;
+}
+
+
+.v1_346 {
+  width: 205px;
+  height: 408px;
+  background: url("./sectores.page.html");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 232px;
+  left: 9px;
+  overflow: hidden;
+}
+.v1_347 {
+  width: 205px;
+  height: 408px;
+  background: rgba(7,25,31,0.5299999713897705);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  overflow: hidden;
+}
+.v1_349 {
+  width: 146px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 240px;
+  left: 30px;
+  font-family: Inter;
+  font-weight: Extra Bold;
+  font-size: 20px;
+  opacity: 1;
+  text-align: center;
+}
+.v1_350 {
+  width: 146px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 53px;
+  left: 30px;
+  font-family: Inter;
+  font-weight: Extra Bold;
+  font-size: 20px;
+  opacity: 1;
+  text-align: center;
+}
+.v1_352 {
+  width: 146px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 8px;
+  left: 31px;
+  font-family: Inter;
+  font-weight: Extra Bold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: center;
+}
+.v1_348 {
+  width: 85px;
+  height: 107px;
+  background: rgba(49,146,234,1);
+  opacity: 1;
+  position: absolute;
+  top: 510px;
+  left: 70px;
+  border: 1px solid rgba(0,0,0,1);
+}
+.v1_351 {
+  width: 85px;
+  height: 107px;
+  background: rgba(49,146,234,1);
+  opacity: 1;
+  position: absolute ;
+  top: 330px;
+  left: 70px;
+  border: 1px solid rgba(0,0,0,1);
+}
+
+ion-button {
+  --border-width: 10; /* Eliminar el borde */
+}
+
+.extra-space {
+  margin-top: 250px; /* Puedes ajustar la altura del espacio aquí */
+}
+
+.centered-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px; /* Ajusta el espacio superior según lo necesites */
+  text-align: center;
+}
+
+
+.table-container table thead tr th {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.table-container table tbody tr td:first-child {
+  color: #fcfcfc;
+  font-size: 35px;
+  font-weight: bold;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.centered-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 90%;
+  max-width: 600px;
+}
+
+.logo-image {
+  position: absolute;
+  top: -40px; /* Ajusta el valor según sea necesario */
+  right: 50px; /* Ajusta el valor según sea necesario */
+  width: 550px; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+  z-index: 1000;
+ /* Asegura que esté por encima de otros elementos */
+}
+
+.v1_350 {
+  display: inline-block;
+  font-size: 12px; /* Tamaño de fuente más pequeño */
+  padding: 8px 12px; /* Ajusta el relleno según necesites */
+  color: white; /* Color del texto */
+  background: rgba(7,25,31,0.5299999713897705);
+  border: none;
+  border-radius: 100px; /* Bordes redondeados */
+  text-align: center;
+  text-decoration: none;
+  margin: -3px 2px;
+  transition-duration: 0.4s; /* Transición suave */
+  cursor: pointer;
+}
+
+.v1_349 {
+  display: inline-block;
+  font-size: 12px; /* Tamaño de fuente más pequeño */
+  padding: 8px 12px; /* Ajusta el relleno según necesites */
+  color: white; /* Color del texto */
+  background: rgba(7,25,31,0.5299999713897705);
+  border: none;
+  border-radius: 100px; /* Bordes redondeados */
+  text-align: center;
+  text-decoration: none;
+  margin: -10px 2px;
+  transition-duration: 0.4s; /* Transición suave */
+  cursor: pointer;
+}
+
+.stanque-btn:hover {
+  background-color: white; /* Fondo blanco al pasar el ratón */
+  color: black; /* Texto negro al pasar el ratón */
+  border: 2px solid #4CAF50; /* Borde verde al pasar el ratón */
+}
+
