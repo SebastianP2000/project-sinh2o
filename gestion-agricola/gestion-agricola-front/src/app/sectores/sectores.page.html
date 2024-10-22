@@ -55,6 +55,9 @@
           <p *ngIf="selectedCuadrante.ultima_irrigacion"><strong>Última Irrigación:</strong> {{ selectedCuadrante.ultima_irrigacion | date }}</p>
           <p *ngIf="selectedCuadrante.fecha_sensor_agregado"><strong>Fecha Sensor Agregado:</strong> {{ selectedCuadrante.fecha_sensor_agregado | date }}</p>
           <p *ngIf="selectedCuadrante.tipo_planta"><strong>Tipo de Planta:</strong> {{ selectedCuadrante.tipo_planta }}</p>
+          <p *ngIf="temperatura !== null"><strong>Temperatura:</strong> {{ temperatura }} °C</p>
+          <p *ngIf="humedad !== null"><strong>Humedad:</strong> {{ humedad }} %</p>
+          
           <!-- Mensaje de no disponible -->
           <div *ngIf="!selectedCuadrante.ultima_irrigacion && !selectedCuadrante.fecha_sensor_agregado && !selectedCuadrante.tipo_planta && !selectedCuadrante.sensor">
             <p>No hay información disponible para este cuadrante</p>

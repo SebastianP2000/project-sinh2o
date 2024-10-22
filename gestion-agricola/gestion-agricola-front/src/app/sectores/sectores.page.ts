@@ -18,6 +18,9 @@ export class SectoresPage implements OnInit {
   letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
   filas = [1, 2, 3, 4];
 
+  temperatura: number | null = null;
+  humedad: number | null = null;
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -75,27 +78,7 @@ export class SectoresPage implements OnInit {
     this.selectedEstanque = null;
   }
 
-  /*listenForUpdates() {
-    this.websocketService.datosSubject.subscribe((data) => {
-      // Actualiza la lista de estanques según los datos recibidos
-      if (data.capacidadEstanque) {
-        // Encuentra el estanque que necesitas actualizar
-        const estanqueActual = this.estanques.find(e => e.nombre === data.capacidadEstanque.nombre);
-        if (estanqueActual) {
-          estanqueActual.capacidad_actual = data.capacidadEstanque.capacidad_actual; // Actualiza la capacidad actual
-          console.log(`Capacidad actualizada para ${estanqueActual.nombre}: ${estanqueActual.capacidad_actual}`);
-        }
-      }
-      
-      // Aquí puedes manejar la temperatura y humedad si es necesario
-      if (data.temperatura !== undefined) {
-        console.log('Temperatura:', data.temperatura);
-      }
-      if (data.humedad !== undefined) {
-        console.log('Humedad:', data.humedad);
-      }
-    });
-  }*/
+
 
 
   listenForUpdates() {
@@ -108,6 +91,15 @@ export class SectoresPage implements OnInit {
                 console.log('Capacidad actualizada:', estanqueActualizado); // Log para verificar la actualización
             }
         }
+        if (data.temperatura !== undefined) {
+          this.temperatura = data.temperatura; // Actualiza la temperatura
+          console.log('Temperatura actualizada:', this.temperatura); // Log para verificar la actualización
+      }
+
+      if (data.humedad !== undefined) {
+          this.humedad = data.humedad; // Actualiza la humedad
+          console.log('Humedad actualizada:', this.humedad); // Log para verificar la actualización
+      }
     });
   }
 

@@ -60,61 +60,33 @@ wss.on('connection', (ws) => {
         return capacidadEstanque; // Retornar solo el objeto de capacidad del estanque
     };*/
 
-    const generarDatosSimulados = async () => {
-        const estanques = await Estanque.find();
-        const sensores = await Sensor.find();
-    
-        // Actualizar capacidad de estanques
-        for (const estanque of estanques) {
-            const capacidadActual = Math.round(Math.random() * estanque.capacidad_maxima);
-            await Estanque.updateOne({ _id: estanque._id }, { $set: { capacidad_actual: capacidadActual } });
-        }
-    
-        // Agrupar sensores por cuadrante
-        const sensoresPorCuadrante = {};
-        for (const sensor of sensores) {
-            const cuadrante = sensor.sector; // Supongamos que 'sector' indica el cuadrante
-            if (!sensoresPorCuadrante[cuadrante]) {
-                sensoresPorCuadrante[cuadrante] = [];
-            }
-            sensoresPorCuadrante[cuadrante].push(sensor);
-        }
-    
-        // Generar datos para cada cuadrante
-        for (const cuadrante in sensoresPorCuadrante) {
-            const temperatura = parseFloat((Math.random() * 30 + 15).toFixed(2)); // Ejemplo: Temperatura entre 15 y 45
-            const humedad = parseFloat((Math.random() * 100).toFixed(2)); // Ejemplo: Humedad entre 0 y 100%
-    
-            for (const sensor of sensoresPorCuadrante[cuadrante]) {
-                await Sensor.updateOne(
-                    { _id: sensor._id },
-                    { $set: { temperatura, humedad } }
-                );
-                console.log(`Sensor actualizado en cuadrante ${cuadrante} - Temp: ${temperatura}, Hum: ${humedad}`);
-            }
-        }
-    
-        return { estanques, sensores }; // Retornar los objetos de estanques y sensores
-    };
-    
-
-
-
     const sendDataFromDatabase = async () => {
-        const capacidadEstanque = await generarDatosSimulados(); // Genera datos falsos
-        
-        // Obtener todos los estanques después de la simulación
-        const estanquesActualizados = await Estanque.find(); 
-    
-        // Prepara los datos para enviar todos los estanques
-        const datosParaEnviar = estanquesActualizados.map(estanque => ({
-            nombre: estanque.nombre,
-            capacidad_actual: estanque.capacidad_actual,
-        }));
-    
-        console.log('enviando datos:', datosParaEnviar); // Log de los datos que se envían
-        ws.send(JSON.stringify(datosParaEnviar)); // Envía el objeto completo con todos los estanques
-    };
+        try {
+            // Obtener estanques y sensores de la base de datos
+            const estanques = await Estanque.find();
+            const sensores = await Sensor.find();
+
+            // Formatear los datos para enviar
+            const datosParaEnviar = {
+                estanques: estanques.map(estanque => ({
+                    nombre: estanque.nombre,
+                    capacidad_actual: estanque.capacidad_actual,
+                    capacidad_maxima: estanque.capacidad_maxima
+                })),
+                sensores: sensores.map(sensor => ({
+                    nombre: sensor.nombre,
+                    temperatura: sensor.temperatura,
+                    humedad: sensor.humedad,
+                    sector: sensor.sector
+                }))
+            };
+
+            // Enviar los datos al cliente WebSocket
+            ws.send(JSON.stringify(datosParaEnviar));
+        } catch (error) {
+            console.error('Error al obtener datos de la base de datos:', error);
+        }
+    }; 
 
     // Enviar datos al cliente cuando se conecta
     sendDataFromDatabase();

@@ -7,6 +7,9 @@ import { Subject } from 'rxjs';
 export class WebsocketService {
   private socket!: WebSocket;
   public datosSubject: Subject<any> = new Subject<any>();
+  sensores: any[] = [];
+  estanques: any[] = [];
+
 
   constructor() {
     this.connect();
@@ -22,20 +25,26 @@ export class WebsocketService {
       const data = JSON.parse(event.data);
       console.log('Datos recibidos del WebSocket:', data); // Log para verificar datos recibidos
   
-      // Verifica que los datos sean un array
-      if (Array.isArray(data)) {
-          data.forEach(estanque => {
-              if (estanque && estanque.capacidad_actual !== undefined) { // Verifica cada estanque
-                  console.log('Datos válidos recibidos:', estanque);
-                  this.datosSubject.next(estanque); // Emitir los datos de cada estanque si son válidos
-              } else {
-                  console.error('Datos inválidos recibidos para un estanque:', estanque);
-              }
-          });
+      // Verifica que se reciban tanto estanques como sensores
+      if (data && data.estanques && data.sensores) {
+        this.estanques = data.estanques; // Almacena los estanques en el array
+        this.sensores = data.sensores; // Almacena los sensores en el array
+
+        // Emitir datos de estanques
+        this.estanques.forEach((estanque) => {
+          console.log('Estanque:', estanque);
+          this.datosSubject.next(estanque); // Emitir los datos del estanque
+        });
+
+        // Emitir datos de sensores
+        this.sensores.forEach((sensor) => {
+          console.log('Sensor:', sensor);
+          this.datosSubject.next(sensor); // Emitir los datos del sensor
+        });
       } else {
-          console.error('Datos inválidos recibidos:', data);
+        console.error('Datos inválidos recibidos:', data);
       }
-  };
+    };
   
 
     this.socket.onclose = () => {
