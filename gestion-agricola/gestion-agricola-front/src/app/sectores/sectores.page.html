@@ -57,7 +57,7 @@
           <p *ngIf="selectedCuadrante.tipo_planta"><strong>Tipo de Planta:</strong> {{ selectedCuadrante.tipo_planta }}</p>
           <p *ngIf="temperatura !== null"><strong>Temperatura:</strong> {{ temperatura }} °C</p>
           <p *ngIf="humedad !== null"><strong>Humedad:</strong> {{ humedad }} %</p>
-          
+
           <!-- Mensaje de no disponible -->
           <div *ngIf="!selectedCuadrante.ultima_irrigacion && !selectedCuadrante.fecha_sensor_agregado && !selectedCuadrante.tipo_planta && !selectedCuadrante.sensor">
             <p>No hay información disponible para este cuadrante</p>
@@ -71,13 +71,13 @@
     <!-- Título de Estanques -->
     <div class="v1_346">
       <div class="v1_347"></div>
-    
+
       <ion-button class="v1_350" *ngFor="let estanque of estanques" (click)="toggleEstanqueDetails(estanque.nombre)">
-        {{ estanque.nombre }} 
+        {{ estanque.nombre }}
         <!-- Mostrar capacidad máxima y actual en el botón -->
-        <span *ngIf="estanque.capacidad_maxima"> (Capacidad: {{ estanque.capacidad_maxima }})</span>
+
       </ion-button>
-    
+
       <span class="v1_352">Capacidad</span>
     </div>
     <div class="v1_348"></div>
