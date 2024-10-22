@@ -91,7 +91,7 @@ wss.on('connection', (ws) => {
     // Enviar datos al cliente cuando se conecta
     sendDataFromDatabase();
 
-    const intervalId = setInterval(sendDataFromDatabase, 20000); // Actualizar cada 10 segundos
+    const intervalId = setInterval(sendDataFromDatabase, 2000); // Actualizar cada 10 segundos
 
     // Manejar la desconexión del cliente
     ws.on('close', () => {
