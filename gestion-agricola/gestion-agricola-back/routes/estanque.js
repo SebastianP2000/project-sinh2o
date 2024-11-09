@@ -1,5 +1,5 @@
 const express = require('express');
-const Estanque = require('../models/estanque'); // Asegúrate de que la ruta sea correcta
+const Estanque = require('../models/Estanque'); // Asegúrate de que la ruta sea correcta
 const router = express.Router();
 
 // Obtener todos los estanques
