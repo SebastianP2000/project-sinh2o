@@ -6,6 +6,6 @@ const historialSensorSchema = new mongoose.Schema({
     fecha_evento: { type: Date, default: Date.now }
 });
 
-const HistorialSensor = mongoose.model('HistorialSensor', historialSensorSchema, 'Hsensores');
+const HistorialSensor = mongoose.model('Hsensores', historialSensorSchema);
 
 module.exports = HistorialSensor;
