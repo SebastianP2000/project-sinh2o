@@ -2,16 +2,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrlLogin = 'http://localhost:3000/api/auth/login';
-  private apiUrlRegister = 'http://localhost:3000/api/auth/register';
-  private apiUrlcuadrante = 'http://localhost:3000/api/cuadrantes';
-  private apiUrlestanques = 'http://localhost:3000/api/estanques';
-  private apiUrlsensor = 'http://localhost:3000/api/sensor';
+  private apiUrlLogin = `${environment.apiUrl}/auth/login`;
+  private apiUrlRegister = `${environment.apiUrl}/auth/register`;
+  private apiUrlcuadrante = `${environment.apiUrl}/cuadrantes`;
+  private apiUrlestanques = `${environment.apiUrl}/estanques`;
+  private apiUrlsensor = `${environment.apiUrl}/sensor`;
 
   constructor(private http: HttpClient) {}
 

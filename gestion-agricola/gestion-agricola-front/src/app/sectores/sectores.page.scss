@@ -265,3 +265,81 @@ ion-button {
   border: 2px solid #4CAF50; /* Borde verde al pasar el ratón */
 }
 
+/* Estilo para dispositivos móviles */
+@media (max-width: 480px) {
+
+  .v1_346 {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px; 
+    position: relative;
+    margin-top: -1075px; 
+    width: 100%; 
+    padding: 0 200px; 
+  }
+
+  /* Asegúrate de que los botones no tengan posición absoluta */
+  .v1_350, .v1_349 {
+    position: static; 
+    display: inline-block;
+    font-size: 12px;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .table-container {
+    margin-top: -170px; // espacio para los botones de estanque
+    position: relative;
+    z-index: 5;
+  }
+
+  .v1_348, .v1_351 {
+    display: none;
+  }
+
+  .logo-image {
+    display: none;
+  }
+
+  /* Convierte el cuerpo de la tabla en flex para apilar las filas horizontalmente */
+  .table-container table tbody {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  /* Ajuste para cada fila */
+  .table-container tbody tr {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    flex: 1;
+  }
+
+  /* Ocultar el encabezado en dispositivos móviles */
+  .table-container thead {
+    display: none;
+  }
+
+  /* Coloca los números de fila (1, 2, 3) como un título de columna */
+  .table-container tbody td:first-child {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Alinear celdas como columna */
+  .table-container tbody td {
+    display: block;
+    text-align: center;
+    padding: 8px;
+  }
+
+  /* Quita el borde inferior en la última celda de cada fila */
+  .table-container tbody tr td:last-child {
+    border-bottom: none;
+  }
+}
