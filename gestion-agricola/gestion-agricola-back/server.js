@@ -12,7 +12,7 @@ const Usuario = require('./models/Usuario');
 const Estanque = require('./models/Estanque');
 const Sensor = require('./models/Sensores');
 const hsensores = require('./models/Hsensores')
-const bcrypt = require('bcrypt');S
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
