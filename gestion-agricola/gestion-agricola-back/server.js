@@ -39,27 +39,6 @@ const wss = new WebSocket.Server({ server });
 wss.on('connection', (ws) => {
     console.log('Nuevo cliente conectado a WebSocket');
 
-    /*const generarDatosSimulados = async () => {
-        const capacidadEstanque = {
-            nombre: 'Estanque 1',
-            capacidad_maxima: 1000, // Capacidad máxima fija
-            capacidad_actual: Math.round(Math.random() * 1000)  // Capacidad actual entre 0 y 1000 litros
-        };
-    
-        // Actualizar la base de datos con la nueva capacidad actual
-        try {
-            await Estanque.updateOne(
-                { nombre: 'Estanque 1' }, // Criterio de búsqueda
-                { $set: { capacidad_actual: capacidadEstanque.capacidad_actual } } // Actualización
-            );
-            console.log('Capacidad actualizada en MongoDB');
-        } catch (error) {
-            console.error('Error al actualizar la base de datos:', error);
-        }
-    
-        return capacidadEstanque; // Retornar solo el objeto de capacidad del estanque
-    };*/
-
     const sendDataFromDatabase = async () => {
         try {
             // Obtener estanques y sensores de la base de datos
@@ -100,36 +79,10 @@ wss.on('connection', (ws) => {
     });
 });
 
-
-// Función para crear usuario administrador por defecto
-const crearAdminPorDefecto = async () => {
-try {
-    const adminExiste = await Usuario.findOne({ nombreusuario: 'admin' });
-    if (!adminExiste) {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash('admin123', salt); // Contraseña por defecto (cámbiala si es necesario)
-
-        const admin = new Usuario({
-            nombreusuario: 'admin',
-            email: 'admin@example.com',  // Cambia el email si es necesario
-            contrasena: hashedPassword,
-        });
-
-        await admin.save();
-        console.log('Usuario administrador creado exitosamente');
-    } else {
-        console.log('El usuario administrador ya existe');
-    }
-} catch (error) {
-    console.error('Error al crear usuario administrador:', error);
-}
-};
-
 // Conectar a MongoDB
-mongoose.connect('mongodb+srv://sebpino:hR82oZwG1tl8tex4@cluster0.p7flg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {})
+mongoose.connect('mongodb+srv://sebpino:hR82oZwG1tl8tex4@cluster0.p7flg.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0', {})
 .then(() => {
     console.log('Conectado a MongoDB');
-    crearAdminPorDefecto(); // Llamada a la función para crear admin por defecto
 })
 .catch(err => console.error('Error de conexión:', err));
 
