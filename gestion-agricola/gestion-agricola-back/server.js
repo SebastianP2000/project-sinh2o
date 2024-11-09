@@ -6,13 +6,13 @@ const cuadranteRoutes = require('./routes/cuadrante');
 const estanqueRoutes = require('./routes/estanque');
 const sensoresRoutes = require('./routes/sensores');
 const historialRoutes = require('./routes/historial');
-const hsensoresRoutes = require('./routes/Hsensores');
+const hsensoresRoutes = require('./routes/hsensores');
 const cors = require('cors');
 const Usuario = require('./models/Usuario');
-const Estanque = require('./models/estanque');
-const Sensor = require('./models/sensores');
+const Estanque = require('./models/Estanque');
+const Sensor = require('./models/Sensores');
 const hsensores = require('./models/Hsensores')
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');S
 
 const app = express();
 const PORT = process.env.PORT || 3000;
