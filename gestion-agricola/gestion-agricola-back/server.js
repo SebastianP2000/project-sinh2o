@@ -89,6 +89,6 @@ mongoose.connect('mongodb+srv://sebpino:hR82oZwG1tl8tex4@cluster0.p7flg.mongodb.
 .catch(err => console.error('Error de conexión:', err));
 
 // Iniciar el servidor
-server.listen(process.env.PORT || 3000, () => { 
-    console.log(`http://localhost:${process.env.PORT || 3000}`);
+server.listen(PORT || 3000, () => { 
+    console.log(`http://localhost:${ process.env.PORT || 3000}`);
 });
