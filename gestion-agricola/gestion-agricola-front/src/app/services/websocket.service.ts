@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,11 @@ export class WebsocketService {
   }
 
   private connect() {
-    this.socket = new WebSocket('ws://localhost:3000'); // Cambialo si cambiaste de servidor 
+
+    const wsUrl = environment.production ? 'wss://project-sinh2o.onrender.com' : 'ws://localhost:3000' ;
+
+    this.socket = new WebSocket(wsUrl); // Cambialo si cambiaste de servidor 
+    
     this.socket.onopen = () => {
       console.log('Conectado al servidor WebSocket');
     };
