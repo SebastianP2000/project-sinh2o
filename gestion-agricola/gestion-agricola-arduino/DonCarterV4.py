@@ -12,19 +12,15 @@ client = MongoClient('mongodb+srv://sebpino:hR82oZwG1tl8tex4@cluster0.p7flg.mong
 db = client['test']
 coleccion_sensores = db['sensores']  # Colección principal para la monitorización actual
 coleccion_historial = db['Hsensores']  # Colección para guardar el historial
+coleccion_cuadrantes = db['cuadrantes']  # Colección de cuadrantes (Sectores)
 
 # Definir las posiciones posibles en orden
 posiciones = [f"{columna}{fila}" for columna in "ABCD" for fila in range(1, 6)]
 
-# Obtener la lista de posiciones ya ocupadas
-posiciones_ocupadas = [sensor['identificador'] for sensor in coleccion_sensores.find({}, {'identificador': 1})]
-
-# Función para obtener la siguiente posición disponible
-def obtener_siguiente_posicion():
-    for posicion in posiciones:
-        if posicion not in posiciones_ocupadas:
-            return posicion
-    return None  # Devuelve None si no hay posiciones disponibles
+# Función para obtener el sector correspondiente en la base de datos por nombre
+def obtener_sector_por_nombre(nombre_sector):
+    sector = coleccion_cuadrantes.find_one({"nombre": nombre_sector})
+    return sector
 
 try:
     while True:
@@ -42,16 +38,20 @@ try:
                 # Verificar si el sensor ya existe en la base de datos
                 sensor_existente = coleccion_sensores.find_one({'sensor_id': datos['sensor_id']})
 
+                # Asignar el identificador del sector si no existe aún
                 if not sensor_existente:
-                    nueva_posicion = obtener_siguiente_posicion()
-                    if nueva_posicion:
-                        datos['identificador'] = nueva_posicion
-                        posiciones_ocupadas.append(nueva_posicion)
-                        print(f"Asignada la posición {nueva_posicion} al nuevo sensor.")
+                    # Buscar el sector en la colección de cuadrantes (ejemplo: Sector A1)
+                    nombre_sector = f"Sector {datos['identificador']}"  # "Sector A1", etc.
+                    sector = obtener_sector_por_nombre(nombre_sector)
+
+                    if sector:
+                        datos['identificador'] = nombre_sector  # Asignamos el nombre del sector al identificador
+                        print(f"Asignado el sector {nombre_sector} al nuevo sensor.")
                     else:
-                        print("No hay posiciones disponibles.")
+                        print(f"El sector {nombre_sector} no se encuentra en la base de datos.")
                         continue
                 else:
+                    # Si el sensor ya existe, se mantiene en su sector asignado
                     datos['identificador'] = sensor_existente['identificador']
 
                     # Verificar si hay cambios en la temperatura o la humedad

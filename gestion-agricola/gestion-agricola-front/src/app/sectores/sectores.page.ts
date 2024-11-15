@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { WebsocketService } from '../services/websocket.service';
 
-
 @Component({
   selector: 'app-sectores',
   templateUrl: './sectores.page.html',
@@ -41,7 +40,9 @@ export class SectoresPage implements OnInit {
     this.authService.getCuadrantes().subscribe((data) => {
       this.cuadrantes = data.map((cuadrante: any) => ({
         ...cuadrante,
-        showDetails: false
+        showDetails: false,
+        temperatura: null, // Asignar temperatura y humedad a null por defecto
+        humedad: null,
       }));
     });
   }
@@ -53,11 +54,14 @@ export class SectoresPage implements OnInit {
   }
 
   showDetails(nombreCuadrante: string) {
-    const cuadrante = this.cuadrantes.find(c => c.nombre === nombreCuadrante);
+    const cuadrante = this.cuadrantes.find(c => c.identificador === nombreCuadrante);
     if (cuadrante) {
       this.selectedCuadrante = cuadrante;
+      console.log('Cuadrante seleccionado:', this.selectedCuadrante); // Verifica el cuadrante seleccionado
+      this.websocketService.startListeningForCuadrante(); // Comienza a escuchar datos para este cuadrante
     } else {
-      this.selectedCuadrante = { nombre: nombreCuadrante, ultima_irrigacion: null, fecha_sensor_agregado: null, tipo_planta: null };
+      this.selectedCuadrante = { identificador: nombreCuadrante, ultima_irrigacion: null, fecha_sensor_agregado: null, tipo_planta: null };
+      this.websocketService.stopListening(); // Detén la escucha si no hay cuadrante
     }
   }
 
@@ -65,44 +69,68 @@ export class SectoresPage implements OnInit {
     const estanque = this.estanques.find(e => e.nombre === nombreEstanque);
     if (estanque) {
       this.selectedEstanque = estanque;
+      console.log('Estanque seleccionado:', this.selectedEstanque); // Verifica el estanque seleccionado
+      this.websocketService.startListeningForEstanque(); // Comienza a escuchar datos para este estanque
     } else {
-      this.selectedEstanque = { nombre: nombreEstanque, capacidad_maxima: null, capacidad_actual: null};
+      this.selectedEstanque = { nombre: nombreEstanque, capacidad_actual: null, capacidad_maxima: null };
+      this.websocketService.stopListening(); // Detener la escucha si no hay estanque
     }
   }
 
   closeDetails() {
     this.selectedCuadrante = null;
+    this.websocketService.stopListening(); // Detener la escucha cuando ya no hay cuadrante seleccionado
   }
 
   closeDetailsE() {
     this.selectedEstanque = null;
+    this.websocketService.stopListening(); // Detener la escucha cuando ya no hay estanque seleccionado
   }
-
-
-
 
   listenForUpdates() {
     this.websocketService.datosSubject.subscribe((data) => {
-        if (data.capacidad_actual !== undefined) {
-            // Actualiza el estanque correspondiente con la capacidad actual
-            const estanqueActualizado = this.estanques.find(e => e.nombre === data.nombre); // Busca el estanque por nombre
-            if (estanqueActualizado) {
-                estanqueActualizado.capacidad_actual = data.capacidad_actual; // Actualiza la capacidad actual
-                console.log('Capacidad actualizada:', estanqueActualizado); // Log para verificar la actualización
-            }
-        }
+      console.log('Datos recibidos del WebSocket:', data); // Verificar los datos completos
+  
+      // Asegurarnos de que los datos del sensor sean manejados correctamente para cuadrantes
+      if (this.selectedCuadrante && data.identificador === this.selectedCuadrante.identificador) {
+        // Actualizar valores de temperatura y humedad del sensor
         if (data.temperatura !== undefined) {
-          this.temperatura = data.temperatura; // Actualiza la temperatura
-          console.log('Temperatura actualizada:', this.temperatura); // Log para verificar la actualización
+          this.selectedCuadrante.sensor = this.selectedCuadrante.sensor || {};  // Asegurarse de que existe un objeto para el sensor
+          this.selectedCuadrante.sensor.temperatura = data.temperatura;
+          console.log('Temperatura del sensor actualizada:', this.selectedCuadrante.sensor.temperatura);
+        } else {
+          // Si no hay datos, se puede establecer en null o 'N/D'
+          if (!this.selectedCuadrante.sensor) this.selectedCuadrante.sensor = {};
+          this.selectedCuadrante.sensor.temperatura = null;
+        }
+  
+        if (data.humedad !== undefined) {
+          this.selectedCuadrante.sensor = this.selectedCuadrante.sensor || {};  // Asegurarse de que existe un objeto para el sensor
+          this.selectedCuadrante.sensor.humedad = data.humedad;
+          console.log('Humedad del sensor actualizada:', this.selectedCuadrante.sensor.humedad);
+        } else {
+          // Si no hay datos, se puede establecer en null o 'N/D'
+          if (!this.selectedCuadrante.sensor) this.selectedCuadrante.sensor = {};
+          this.selectedCuadrante.sensor.humedad = null;
+        }
       }
 
-      if (data.humedad !== undefined) {
-          this.humedad = data.humedad; // Actualiza la humedad
-          console.log('Humedad actualizada:', this.humedad); // Log para verificar la actualización
+      // Asegurarnos de que los datos del estanque sean manejados correctamente
+      if (this.selectedEstanque && data.nombre === this.selectedEstanque.nombre) {
+        // Si el estanque tiene datos para la capacidad
+        if (data.capacidad_actual !== undefined) {
+          this.selectedEstanque.capacidad_actual = data.capacidad_actual;
+          console.log('Capacidad actual del estanque actualizada:', this.selectedEstanque.capacidad_actual);
+        } else {
+          this.selectedEstanque.capacidad_actual = null;
+        }
+        if (data.capacidad_maxima !== undefined) {
+          this.selectedEstanque.capacidad_maxima = data.capacidad_maxima;
+          console.log('Capacidad máxima del estanque actualizada:', this.selectedEstanque.capacidad_maxima);
+        } else {
+          this.selectedEstanque.capacidad_maxima = null;
+        }
       }
     });
   }
-
-
-
 }

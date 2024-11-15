@@ -23,8 +23,7 @@ export class AuthService {
     });
   }
   isAuthenticated(): boolean {
-    // Lógica para determinar si el usuario está autenticado
-    return !!localStorage.getItem('token'); // O la lógica que estés usando para manejar el token
+    return !!localStorage.getItem('token'); 
   }
 
   crearUsuario(usuario: any): Observable<any> {

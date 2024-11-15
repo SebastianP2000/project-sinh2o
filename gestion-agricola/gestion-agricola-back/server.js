@@ -8,11 +8,9 @@ const sensoresRoutes = require('./routes/sensores');
 const historialRoutes = require('./routes/historial');
 const hsensoresRoutes = require('./routes/hsensores');
 const cors = require('cors');
-const Usuario = require('./models/Usuario');
 const Estanque = require('./models/Estanque');
 const Sensor = require('./models/Sensores');
-const hsensores = require('./models/Hsensores')
-const bcrypt = require('bcrypt');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -37,10 +35,11 @@ const server = http.createServer(app);
 // WebSocket para manejar nuevas conexiones
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ server });
+const connectedClients = [];
 
 wss.on('connection', (ws) => {
     console.log('Nuevo cliente conectado a WebSocket');
-
+    connectedClients.push(ws);
     const sendDataFromDatabase = async () => {
         try {
             // Obtener estanques y sensores de la base de datos
@@ -58,27 +57,35 @@ wss.on('connection', (ws) => {
                     nombre: sensor.nombre,
                     temperatura: sensor.temperatura,
                     humedad: sensor.humedad,
-                    sector: sensor.sector
+                    identificador: sensor.identificador
                 }))
             };
 
-            // Enviar los datos al cliente WebSocket
-            ws.send(JSON.stringify(datosParaEnviar));
-        } catch (error) {
-            console.error('Error al obtener datos de la base de datos:', error);
-        }
-    }; 
+
+            connectedClients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                  client.send(JSON.stringify(datosParaEnviar));
+                }
+              });
+            } catch (error) {
+              console.error('Error al obtener datos de la base de datos:', error);
+            }
+    };
 
     // Enviar datos al cliente cuando se conecta
     sendDataFromDatabase();
 
-    const intervalId = setInterval(sendDataFromDatabase, 2000); // Actualizar cada 10 segundos
+    const intervalId = setInterval(sendDataFromDatabase, 2000); // Actualizar cada 2 segundos
 
     // Manejar la desconexión del cliente
     ws.on('close', () => {
         console.log('Cliente desconectado de WebSocket');
         clearInterval(intervalId);
-    });
+        const index = connectedClients.indexOf(ws);
+        if (index !== -1) {
+          connectedClients.splice(index, 1); // Elimina el cliente desconectado
+        }
+      });
 });
 
 // Conectar a MongoDB
@@ -88,7 +95,13 @@ mongoose.connect('mongodb+srv://sebpino:hR82oZwG1tl8tex4@cluster0.p7flg.mongodb.
 })
 .catch(err => console.error('Error de conexión:', err));
 
+// desconexion de la base de datos
+mongoose.connection.on('disconnected', () => {
+    console.log('Desconectado de MongoDB');
+});
+
 // Iniciar el servidor
 server.listen(PORT || 3000, () => { 
     console.log(`http://localhost:${ process.env.PORT || 3000}`);
 });
+

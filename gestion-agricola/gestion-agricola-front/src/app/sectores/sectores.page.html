@@ -43,30 +43,35 @@
       </div>
     </ion-item-group>
 
-    <!-- Mostrar detalles del cuadrante -->
-    <div *ngIf="selectedCuadrante" class="cuadrante-details centered-card">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title [ngClass]="{'highlight': selectedCuadrante.nombre === selectedCuadrante.nombre}">
-            Detalles de {{ selectedCuadrante.nombre }}
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p *ngIf="selectedCuadrante.ultima_irrigacion"><strong>Última Irrigación:</strong> {{ selectedCuadrante.ultima_irrigacion | date }}</p>
-          <p *ngIf="selectedCuadrante.fecha_sensor_agregado"><strong>Fecha Sensor Agregado:</strong> {{ selectedCuadrante.fecha_sensor_agregado | date }}</p>
-          <p *ngIf="selectedCuadrante.tipo_planta"><strong>Tipo de Planta:</strong> {{ selectedCuadrante.tipo_planta }}</p>
-          <p *ngIf="temperatura !== null"><strong>Temperatura:</strong> {{ temperatura }} °C</p>
-          <p *ngIf="humedad !== null"><strong>Humedad:</strong> {{ humedad }} %</p>
+    <!-- Detalles del cuadrante -->
+  <div *ngIf="selectedCuadrante" class="cuadrante-details centered-card">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title [ngClass]="{'highlight': selectedCuadrante.identificador === selectedCuadrante.identificador}">Detalles de {{ selectedCuadrante.identificador }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p *ngIf="selectedCuadrante.ultima_irrigacion"><strong>Última Irrigación:</strong> {{ selectedCuadrante.ultima_irrigacion | date }}</p>
+        <p *ngIf="selectedCuadrante.fecha_sensor_agregado"><strong>Fecha Sensor Agregado:</strong> {{ selectedCuadrante.fecha_sensor_agregado | date }}</p>
+        <p *ngIf="selectedCuadrante.tipo_planta"><strong>Tipo de Planta:</strong> {{ selectedCuadrante.tipo_planta }}</p>
 
-          <!-- Mensaje de no disponible -->
-          <div *ngIf="!selectedCuadrante.ultima_irrigacion && !selectedCuadrante.fecha_sensor_agregado && !selectedCuadrante.tipo_planta && !selectedCuadrante.sensor">
-            <p>No hay información disponible para este cuadrante</p>
-          </div>
-        </ion-card-content>
-        <!-- Botón para cerrar la información -->
+        <!-- Temperatura y Humedad del sensor -->
+        <p *ngIf="selectedCuadrante.sensor?.temperatura !== null && selectedCuadrante.sensor?.temperatura !== undefined">
+          <strong>Temperatura:</strong> {{ selectedCuadrante.sensor.temperatura }} °C
+        </p>
+        <p *ngIf="selectedCuadrante.sensor?.humedad !== null && selectedCuadrante.sensor?.humedad !== undefined">
+          <strong>Humedad:</strong> {{ selectedCuadrante.sensor.humedad }} %
+        </p>
+
+        <!-- Mensaje de no disponible si no hay datos -->
+        <div *ngIf="!selectedCuadrante.ultima_irrigacion && !selectedCuadrante.fecha_sensor_agregado && !selectedCuadrante.tipo_planta && (selectedCuadrante.sensor?.temperatura === null || selectedCuadrante.sensor?.humedad === null)">
+          <p>No hay información disponible para este cuadrante</p>
+        </div>
+      </ion-card-content>
+       <!-- Botón para cerrar la información -->
         <ion-button fill="outline" size="small" (click)="closeDetails()">Cerrar Información</ion-button>
-      </ion-card>
-    </div>
+    </ion-card>
+  </div>
+
 
     <!-- Título de Estanques -->
     <div class="v1_346">
