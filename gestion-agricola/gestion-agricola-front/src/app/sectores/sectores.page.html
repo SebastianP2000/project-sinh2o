@@ -85,8 +85,13 @@
 
       <span class="v1_352">Capacidad</span>
     </div>
-    <div class="v1_348"></div>
-    <div class="v1_351"></div>
+    <!-- <div class="v1_348"></div> -->
+    <div class="bateria1">
+      <div id="barra4-escritorio" class="barra"></div>
+      <div id="barra3-escritorio" class="barra"></div>
+      <div id="barra2-escritorio" class="barra"></div>
+      <div id="barra1-escritorio" class="barra"></div>
+    </div>
 
 <!-- Mostrar detalles del estanque -->
   <div *ngIf="selectedEstanque" class="estanque centered-card">
@@ -108,6 +113,15 @@
         <div *ngIf="!selectedEstanque.capacidad_maxima && !selectedEstanque.capacidad_actual">
           <p>No hay información disponible para este estanque.</p>
         </div>
+
+        <!-- Indicador de nivel de batería -->
+        <div class="bateria">
+          <div id="barra4-movil" class="barra"></div>
+          <div id="barra3-movil" class="barra"></div>
+          <div id="barra2-movil" class="barra"></div>
+          <div id="barra1-movil" class="barra"></div>
+        </div>
+
       </ion-card-content>
       <!-- Botón para cerrar la información -->
       <ion-button fill="outline" size="small" (click)="closeDetailsE()">Cerrar Información</ion-button>
@@ -115,7 +129,3 @@
   </div>
 
 </ion-content>
-
-
-
-
