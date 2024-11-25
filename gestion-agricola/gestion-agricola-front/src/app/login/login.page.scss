@@ -4,24 +4,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative; /* Añadir posición relativa */
+  position: relative; /* Necesario para posicionar elementos dentro */
 }
+
+
 
 .logo-container {
   text-align: center;
   margin-bottom: 30px;
-  position: relative; /* Añadir posición relativa */
-  z-index: 1; /* Asegura que el logo esté encima del filtro */
+  position: relative; /* Asegura que el logo no se superponga incorrectamente */
+  z-index: 1; /* Coloca el logo por encima del filtro */
 }
 
 .logo {
-  max-width: 400px; /* Mantén el tamaño máximo que desees para el logo */
+  max-width: 300px; /* Tamaño ajustado del logo */
 }
 
 .input-item {
   --background: rgba(255, 255, 255, 0.2);
-  --border-radius: 10px;
+  --border-radius: 25px; /* Más redondeado */
   margin-bottom: 20px;
+  animation: bounce 1.5s ease-in-out;
 }
 
 .button-row {
@@ -29,25 +32,74 @@
 }
 
 ion-button {
-  --border-radius: 20px;
+  --background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  --background-hover: linear-gradient(144deg, #1e1e1e 20%, #1e1e1e 50%, #1e1e1e);
+  --border-radius: 25px;
+  animation: bounce2 1.6s ease-in-out;
 }
 
 .background-image {
-  position: absolute; /* Coloca la imagen detrás de otros elementos */
+  position: absolute; /* Asegura que ocupe todo el espacio */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Hace que la imagen cubra todo el contenedor */
+  object-fit: cover;
   z-index: -1; /* Envía la imagen al fondo */
 }
 
 .v1_4 {
   width: 100%;
   height: 100%;
-  background: rgba(13, 42, 52, 0.9); /* Color azul oscuro con opacidad */
-  position: absolute; /* Coloca el filtro en la parte superior */
-  top: 0; /* Alineado al inicio */
-  left: 0; /* Alineado al inicio */
-  z-index: 0; /* Asegura que el filtro esté sobre la imagen de fondo */
+  background: rgba(13, 42, 52, 0.9); /* Filtro oscuro */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0; /* Asegura que el filtro esté entre la imagen de fondo y los elementos */
+}
+
+
+
+@keyframes bounce {
+  0% {
+    transform: translateY(-250px);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(-20px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce2 {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  70% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .login-page {
+    padding: 20px;
+  }
+
+  .logo {
+    max-width: 200px;
+  }
+
+  .input-item {
+    font-size: 0.9em;
+  }
 }

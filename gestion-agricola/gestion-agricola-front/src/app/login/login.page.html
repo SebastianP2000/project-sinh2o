@@ -1,25 +1,30 @@
 <ion-content class="login-page">
-
+  <!-- Contenedor del logo -->
   <div class="logo-container">
-    <img src="assets/icon/Logo.png" class="logo">
+    <img src="assets/icon/Logo.png" class="logo" />
   </div>
 
+  <!-- Imagen de fondo -->
   <img src="../../assets/img/background.png" class="background-image" />
   <div class="v1_4"></div>
 
+  <!-- Contenedor del formulario -->
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-md="6" size-lg="4">
+        <!-- Campo de usuario -->
         <ion-item class="input-item">
           <ion-label position="floating">Usuario</ion-label>
           <ion-input [(ngModel)]="nombreusuario" name="nombreusuario" required></ion-input>
         </ion-item>
 
+        <!-- Campo de contraseña -->
         <ion-item class="input-item">
           <ion-label position="floating">Contraseña</ion-label>
           <ion-input [(ngModel)]="contrasena" name="contrasena" type="password" required></ion-input>
         </ion-item>
 
+        <!-- Botón de inicio de sesión -->
         <ion-row class="ion-justify-content-between button-row">
           <ion-col size="6">
             <ion-button expand="full" color="primary" (click)="onLogin()">

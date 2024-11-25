@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-buttons slot="start">
-    <ion-button fill="clear" (click)="navigateBack()">Volver</ion-button>
+    <ion-button class="button" fill="clear" (click)="navigateBack()"><ion-icon name="arrow-back"></ion-icon></ion-button>
   </ion-buttons>
   <!-- Agregar logo en la esquina superior derecha -->
   <img src="../../assets/icon/Logo.png" alt="Logo" class="logo-image" />
@@ -19,6 +19,13 @@
     <!-- Espacio antes de la tabla -->
     <div class="extra-space"></div>
 
+    <!-- Boton de estanque de la media query -->
+    <ion-button class="boton_media" *ngFor="let estanque of estanques" (click)="toggleEstanqueDetails(estanque.nombre)">
+      <span class="liquid"></span>
+      <span class="btn-txt">{{ estanque.nombre }}</span>
+    </ion-button>
+    
+
     <!-- Tabla de Cuadrantes -->
     <ion-item-group>
       <div class="table-container">
@@ -33,8 +40,11 @@
             <tr *ngFor="let fila of filas; let i = index" [attr.data-fila]="fila">
               <td>{{ i + 1 }}</td>
               <td *ngFor="let letra of letras; let j = index" [attr.data-letra]="letra">
-                <ion-button fill="outline" (click)="showDetails('Sector ' + letra + fila)">
-                  {{ letra }}{{ fila }}
+                <ion-button fill="clear" class="water-button" (click)="showDetails('Sector ' + letra + fila)">
+                  <svg xmlns="http://www.w3.org/2000/svg">
+                    <rect class="border" pathLength="100"></rect>
+                  </svg>
+                  <div class="txt-upload">{{ letra }}{{ fila }}</div>
                 </ion-button>
               </td>
             </tr>
@@ -42,6 +52,7 @@
         </table>
       </div>
     </ion-item-group>
+    
 
     <!-- Detalles del cuadrante -->
   <div *ngIf="selectedCuadrante" class="cuadrante-details centered-card">
@@ -77,16 +88,17 @@
     <div class="v1_346">
       <div class="v1_347"></div>
 
+      <!-- Boton escritorio -->
       <ion-button class="v1_350" *ngFor="let estanque of estanques" (click)="toggleEstanqueDetails(estanque.nombre)">
         {{ estanque.nombre }}
         <!-- Mostrar capacidad máxima y actual en el botón -->
-
       </ion-button>
 
       <span class="v1_352">Capacidad</span>
     </div>
     <!-- <div class="v1_348"></div> -->
     <div class="bateria1">
+      <div class="liquid"></div>
       <div id="barra4-escritorio" class="barra"></div>
       <div id="barra3-escritorio" class="barra"></div>
       <div id="barra2-escritorio" class="barra"></div>
