@@ -7,6 +7,7 @@ const estanqueRoutes = require('./routes/estanque');
 const sensoresRoutes = require('./routes/sensores');
 const historialRoutes = require('./routes/historial');
 const hsensoresRoutes = require('./routes/hsensores');
+const predictionRoutes = require('./routes/prediction');
 const cors = require('cors');
 const Estanque = require('./models/Estanque');
 const Sensor = require('./models/Sensores');
@@ -29,6 +30,7 @@ app.use('/api/sensores', sensoresRoutes);
 app.use('/api/historial', historialRoutes);
 app.use('/api/hsensores', hsensoresRoutes)
 
+app.use('/api/prediction', predictionRoutes);
 // Crear servidor HTTP
 const server = http.createServer(app);
 
