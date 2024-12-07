@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const HistorialSensor = require('../models/Hsensores'); // Asegúrate de importar el modelo correctamente
+const HistorialSensor = require('../models/Hsensores'); 
 
-// GET: Obtener todos los registros de Hsensores
+
 router.get('/', async (req, res) => {
     try {
         const registros = await HistorialSensor.find();
@@ -12,9 +12,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Eliminar un registro por su ID
+
 router.delete('/:id', async (req, res) => {
-    const { id } = req.params; // Obtener el ID del parámetro de la URL
+    const { id } = req.params; 
     try {
         const resultado = await HistorialSensor.findByIdAndDelete(id);
         if (!resultado) {
@@ -22,7 +22,7 @@ router.delete('/:id', async (req, res) => {
         }
         res.status(200).json({ message: 'Registro eliminado correctamente' });
     } catch (error) {
-        console.error('Error al eliminar el registro:', error); // Registro del error
+        console.error('Error al eliminar el registro:', error); 
         res.status(500).json({ message: 'Error al eliminar el registro', error });
     }
 });

@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Usuarios</ion-title>
+    <ion-buttons slot="start">
+      <ion-button class="button" fill="clear" (click)="navigateBack()"><ion-icon name="arrow-back"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <!-- Agregar logo en la esquina superior derecha -->
+  <img src="../../assets/icon/Logo.png" alt="Logo" class="logo-image" />
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="user-page">
+  
+  <img src="../../assets/img/background.png" class="background-image" />
+  <div class="v1_4"></div>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">usuarios</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-loading [isOpen]="isLoading" message="Cargando usuarios..."></ion-loading>
+  
+  <!-- Si hay usuarios, muestra la tabla -->
+  <ion-card *ngIf="!isLoading && users.length > 0">
+    <ion-card-header>
+      <ion-card-title>Usuarios Registrados</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let user of users">
+          <ion-label>
+            <h2>{{ user.nombreusuario }}</h2>
+            <p>{{ user.email }}</p>
+          </ion-label>
+
+          <!-- Botones para actualizar y eliminar -->
+          <ion-buttons slot="end">
+            <ion-button color="primary" (click)="updateUser(user._id, user)">
+              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button color="danger" (click)="deleteUser(user._id)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Si no hay usuarios, mostrar mensaje -->
+  <ion-card *ngIf="!isLoading && users.length === 0">
+    <ion-card-header>
+      <ion-card-title>No hay usuarios registrados</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  
+</ion-content>

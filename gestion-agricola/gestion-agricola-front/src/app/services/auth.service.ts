@@ -13,9 +13,11 @@ export class AuthService {
   private apiUrlcuadrante = `${environment.apiUrl}/cuadrantes`;
   private apiUrlestanques = `${environment.apiUrl}/estanques`;
   private apiUrlsensor = `${environment.apiUrl}/sensor`;
+  private apiUrluser = `${environment.apiUrl}/auth`;
 
   constructor(private http: HttpClient) {}
 
+  // Métodos de autenticación
   login(nombreusuario: string, contrasena: string): Observable<any> {
     return this.http.post(this.apiUrlLogin, {
       nombreusuario,
@@ -30,14 +32,30 @@ export class AuthService {
     return this.http.post(this.apiUrlRegister, usuario);
   }
 
+  // Métodos de usuario 
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrluser);
+  }
+
+  updateUser(id: string, usuario: any): Observable<any> {
+    return this.http.put(`${this.apiUrluser}/usuarios/${id}`, usuario);
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrluser}/usuarios/${id}`);
+  }
+
+  // Métodos de cuadrantes
   getCuadrantes(): Observable<any> {
     return this.http.get(this.apiUrlcuadrante);
   }
 
+  // Métodos de estanques
   getEstanques(): Observable<any> {
     return this.http.get(this.apiUrlestanques);
   }
 
+  // Métodos de sensores
   getSensor(sector: string): Observable<any> {
     return this.http.get(`${this.apiUrlsensor}?sector=${sector}`);
   }

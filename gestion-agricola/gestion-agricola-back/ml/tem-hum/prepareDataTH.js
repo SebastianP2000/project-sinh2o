@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const HistorialSensor = require('../models/Hsensores'); // Ajusta el nombre si el archivo tiene otro nombre
+const HistorialSensor = require('../../models/Hsensores'); // Ajusta el nombre si el archivo tiene otro nombre
 const tf = require('@tensorflow/tfjs-node');  // Asegúrate de importar TensorFlow
 
 const MONGODB_URL = 'mongodb+srv://sebpino:hR82oZwG1tl8tex4@cluster0.p7flg.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0';

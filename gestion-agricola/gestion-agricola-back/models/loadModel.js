@@ -3,7 +3,7 @@ const path = require('path');
 
 async function loadModel() {
   try {
-    const modelPath = path.join(__dirname, '..', 'ml', 'saved', 'model.json'); // Asegúrate de que la ruta es correcta
+    const modelPath = path.join(__dirname, '..', 'ml', 'saved', 'temp-hum', 'model.json'); // Asegúrate de que la ruta es correcta
     console.log(`Cargando el modelo desde: ${modelPath}`);
     const model = await tf.loadLayersModel('file://' + modelPath); // Cargar el modelo
     return model;

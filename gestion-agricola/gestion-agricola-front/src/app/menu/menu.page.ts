@@ -40,4 +40,8 @@ export class MenuPage  {
   navigateTocreate() {
     this.router.navigate(['/crearusuario']);
   }
+  navigateTouser(){
+    this.router.navigate(['/usuarios'])
+  }
+
 }

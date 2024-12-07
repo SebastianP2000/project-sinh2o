@@ -1,10 +1,10 @@
 const tf = require('@tensorflow/tfjs-node');
-const createModel = require('./createModel'); // Importamos el modelo
-const prepareData = require('./prepareData'); // Importamos la función de datos
+const createModel = require('./createModelE'); // Importamos el modelo de agua
+const prepareData = require('./prepareDataE'); // Importamos la función de preparación de datos
 
-async function trainModel() {
+async function trainWaterModel() {
   try {
-    // Llamamos a prepareData para obtener los datos
+    // Llamamos a prepareData para obtener los datos y el promedio de consumo
     const { inputs, labels } = await prepareData();
 
     // Verificar si los datos están correctamente formateados
@@ -17,11 +17,18 @@ async function trainModel() {
       return;
     }
 
-    // Crear el modelo
-    const model = createModel([2], // Entradas: temperatura y humedad
+    // Crear el modelo (con 2 entradas: capacidad_maxima y capacidad_anterior)
+    const model = createModel([2], // Cambiado a 2 entradas
       [{ units: 16, activation: 'relu' }, { units: 8, activation: 'relu' }], // Capas ocultas
-      2 // Salidas: temperatura y humedad
+      1 // Salida: consumo de agua
     );
+
+    // Compilar el modelo
+    model.compile({
+      optimizer: tf.train.adam(),
+      loss: 'meanSquaredError',
+      metrics: ['mse'], // Usar solo MSE
+    });
 
     // Entrenar el modelo
     console.log('Entrenando el modelo...');
@@ -39,12 +46,12 @@ async function trainModel() {
     console.log('Entrenamiento completado.');
 
     // Guardar el modelo entrenado
-    await model.save('file://./ml/saved');
-    console.log('Modelo guardado en ./ml/saved');
+    await model.save('file://./ml/saved/estanque');
+    console.log('Modelo de consumo de agua guardado en ./ml/saved/estanque');
     
   } catch (error) {
     console.error('Error durante el entrenamiento:', error);
   }
 }
 
-trainModel().catch(console.error);
+trainWaterModel().catch(console.error);
