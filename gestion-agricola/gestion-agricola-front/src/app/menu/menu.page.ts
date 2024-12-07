@@ -44,4 +44,8 @@ export class MenuPage  {
     this.router.navigate(['/usuarios'])
   }
 
+  navigateToinstalacion() {
+    this.router.navigate(["/instalacion"])
+  }
+
 }

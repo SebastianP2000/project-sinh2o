@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Sensores</ion-title>
+    <ion-buttons slot="start">
+      <ion-button class="button" fill="clear" (click)="navigateBack()"><ion-icon name="arrow-back"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  <!-- Agregar logo en la esquina superior derecha -->
+  <img src="../../assets/icon/Logo.png" alt="Logo" class="logo-image" />
+</ion-header>
+<ion-content>
+  <ion-content>
+    <img src="../../assets/img/background.png" class="background-image" />
+    <div class="v1_4"></div>
+
+    <!-- Título de Cuadrantes -->
+    <!-- <div class="v1_307 centered-title">
+      <div class="v1_308"></div>
+      <span class="v1_309">Zonas de irrigación</span>
+    </div> -->
+
+    <!-- Espacio antes de la tabla -->
+    <div class="extra-space"></div>
+
+    <!-- Boton de estanque de la media query -->
+    <ion-button class="boton_media" *ngFor="let estanque of estanques" (click)="toggleEstanqueDetails(estanque.nombre)">
+      <span class="liquid"></span>
+      <span class="btn-txt">{{ estanque.nombre }}</span>
+    </ion-button>
+    
+
+    <!-- Tabla de Cuadrantes -->
+    <ion-item-group>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th *ngFor="let letra of letras">{{ letra }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let fila of filas; let i = index" [attr.data-fila]="fila">
+              <td>{{ i + 1 }}</td>
+              <td *ngFor="let letra of letras; let j = index" [attr.data-letra]="letra">
+                <ion-button fill="clear" class="water-button" (click)="showDetails('Sector ' + letra + fila)">
+                  <svg xmlns="http://www.w3.org/2000/svg">
+                    <rect class="border" pathLength="100"></rect>
+                  </svg>
+                  <div class="txt-upload">{{ letra }}{{ fila }}</div>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ion-item-group>
+    
+
+    <div *ngIf="selectedCuadrante" class="cuadrante-details centered-card">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Detalles de {{ selectedCuadrante.identificador }}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <!-- Verificar si tiene un sensor asignado -->
+          <div *ngIf="selectedCuadrante.sensor; else noSensor">
+            <p><strong>Sensor Asignado:</strong> Sí</p>
+            <p><strong>ID del Sensor:</strong> {{ selectedCuadrante.sensor.sensor_id }}</p> 
+            <p><strong>Tipo de Planta Actual:</strong> {{ selectedCuadrante.tipo_planta || 'No asignado' }}</p>
+            <ion-item>
+              <ion-label position="stacked">Editar Tipo de Planta</ion-label>
+              <ion-input
+                [(ngModel)]="selectedCuadrante.tipo_planta"
+                placeholder="Ingrese el tipo de planta"
+              ></ion-input>
+            </ion-item>
+            <ion-button
+              expand="block"
+              fill="outline"
+              (click)="guardarTipoPlanta(selectedCuadrante)"
+            >
+              Guardar Cambios
+            </ion-button>
+          </div>
+    
+          <!-- Mensaje si no tiene sensor -->
+          <ng-template #noSensor>
+            <p>No hay sensor asignado a este cuadrante.</p>
+          </ng-template>
+        </ion-card-content>
+        <ion-button fill="outline" size="small" (click)="closeDetails()">
+          Cerrar Información
+        </ion-button>
+      </ion-card>
+    </div>
+
+</ion-content>

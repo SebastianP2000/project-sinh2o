@@ -50,13 +50,18 @@ export class AuthService {
     return this.http.get(this.apiUrlcuadrante);
   }
 
+  updateCuadrante(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrlcuadrante}/${id}`, data);
+  }
+  
+
   // Métodos de estanques
   getEstanques(): Observable<any> {
     return this.http.get(this.apiUrlestanques);
   }
 
   // Métodos de sensores
-  getSensor(sector: string): Observable<any> {
+  getSensores(sector: string): Observable<any> {
     return this.http.get(`${this.apiUrlsensor}?sector=${sector}`);
   }
 
