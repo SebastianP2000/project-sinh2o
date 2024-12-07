@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
-  <ion-buttons slot="start">
-    <ion-button class="button" fill="clear" (click)="navigateBack()"><ion-icon name="arrow-back"></ion-icon></ion-button>
-  </ion-buttons>
+  <ion-toolbar>
+    <ion-title>Zonas de Irrigación</ion-title>
+    <ion-buttons slot="start">
+      <ion-button class="button" fill="clear" (click)="navigateBack()"><ion-icon name="arrow-back"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
   <!-- Agregar logo en la esquina superior derecha -->
   <img src="../../assets/icon/Logo.png" alt="Logo" class="logo-image" />
 </ion-header>
@@ -11,10 +14,10 @@
     <div class="v1_4"></div>
 
     <!-- Título de Cuadrantes -->
-    <div class="v1_307 centered-title">
+    <!-- <div class="v1_307 centered-title">
       <div class="v1_308"></div>
       <span class="v1_309">Zonas de irrigación</span>
-    </div>
+    </div> -->
 
     <!-- Espacio antes de la tabla -->
     <div class="extra-space"></div>
@@ -91,7 +94,6 @@
       <!-- Boton escritorio -->
       <ion-button class="v1_350" *ngFor="let estanque of estanques" (click)="toggleEstanqueDetails(estanque.nombre)">
         {{ estanque.nombre }}
-        <!-- Mostrar capacidad máxima y actual en el botón -->
       </ion-button>
 
       <span class="v1_352">Capacidad</span>

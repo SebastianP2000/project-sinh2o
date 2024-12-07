@@ -3,6 +3,13 @@
   width: 100%; /* Asegura que ocupe todo el ancho disponible */
 }
 
+ion-title {
+  font-size: 24px; /* Aumentar tamaño de la fuente */
+  color: #ffffff; /* Color del texto */
+  text-transform: uppercase; /* Cambiar el texto a mayúsculas */
+  text-align: center;
+}
+
 .table-container {
   display: flex;                /* Usamos flexbox para centrar */
   justify-content: center;      /* Centra horizontalmente */
@@ -99,7 +106,7 @@ th, td {
   background-size: cover;
   opacity: 1;
   position: absolute;
-  top: 232px;
+  top: 150px;
   left: 8px;
   overflow: hidden;
 }
@@ -183,7 +190,7 @@ ion-button {
 }
 
 .extra-space {
-  margin-top: 250px; /* Puedes ajustar la altura del espacio aquí */
+  margin-top: 180px; 
 }
 
 .centered-title {
@@ -223,12 +230,19 @@ ion-button {
 
 .logo-image {
   position: absolute;
-  top: -2px; /* Ajusta el valor según sea necesario */
-  right: 50px; /* Ajusta el valor según sea necesario */
-  width: 300px; /* Ajusta el tamaño según sea necesario */
-  height: auto;
-  z-index: 1;
- /* Asegura que esté por encima de otros elementos */
+  left: 85%;
+  transform: translateX(-50%);
+  top: 37px; 
+  width: 300px; 
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.cuadrante-details,
+.estanque {
+  z-index: 10; /* Más alto que el logo */
 }
 
 .v1_350 {
@@ -291,7 +305,7 @@ ion-button {
 
   /* Posición inicial (específica para el diseño) */
   position: absolute;
-  top: 330px;
+  top: 250px;
   left: 70px;
   opacity: 1;
 }
@@ -360,7 +374,149 @@ ion-button.water-button {
   display: none;
 }
 
+/* Estilo para dispositivos tablet */
+@media (max-width: 1200px) {
 
+  .extra-space {
+    display: none;
+  }
+
+  .v1_346 {
+    display: none;
+  }
+
+  .boton_media {
+    display: block;
+    font-size: 10px; 
+    padding: 8px 8px; 
+    z-index: 10; 
+    color: #fcfcfc;
+  }
+
+  .v1_352 {
+    display: none;
+  }
+
+  .table-container {
+    overflow-x: auto; 
+  }
+
+  .v1_348, .v1_351 {
+    display: none;
+  }
+
+  .logo-image {
+    display: none;
+  }
+
+  /* Quita el borde inferior en la última celda de cada fila */
+  .table-container tbody tr td:last-child {
+    border-bottom: none;
+  }
+
+  .bateria {
+    width: 60px;
+    height: 120px;
+    border: 2px solid #333; /* Borde de la batería */
+    border-radius: 5px; /* Bordes redondeados */
+    position: relative;
+    margin: 20px auto; /* Centrado */
+    background-color: #e0e0e0; /* Fondo gris */
+    display: flex;
+    flex-direction: column; /* Barras apiladas */
+    align-items: center; /* Centrar barras horizontalmente */
+    justify-content: flex-end; /* Apilar barras desde abajo */
+  }
+
+  .bateria1 { 
+    display: none;
+  }
+
+
+   //Botones tabla
+
+  ion-button.water-button {
+    width: 4rem; 
+    height: 3rem; 
+    padding: 0;
+    margin: 0.2rem;
+
+    svg {
+      width: 85%; 
+      height: 85%;
+    }
+
+    .txt-upload {
+      font-size: 13px; /* Texto más pequeño */
+    }
+
+    .border {
+      stroke-width: 1px; /* Borde más delgado */
+    }
+  }
+
+  /* Estilos de botón personalizado */
+.boton_media {
+  border: 0;
+  outline: 0;
+  color: #fff;
+  padding: 20px; 
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  width: 100%;  /* Ocupa todo el ancho de la pantalla */
+}
+
+.liquid {
+  background-color: #2893eb;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  box-shadow: inset 5px -5px 25px #104e81,
+    inset -5px 0px 25px #104e81;
+}
+
+.liquid::after,
+.liquid::before {
+  content: '';
+  width: 450px;
+  height: 400px;
+  background: rgb(31, 126, 227);
+  z-index: 1;
+  position: absolute;
+  left: -110px;
+  top: -380px;
+  border-radius: 45%;
+  animation: animate 5s linear infinite;
+}
+
+.liquid::before {
+  background-color: rgb(68, 160, 235);
+  animation: animate 5s linear 1.8s infinite;
+}
+
+.btn-txt {
+  position: relative;
+  z-index: 1;
+  font-size: 15px;
+  font-family: sans-serif;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* Animación para el efecto de líquido */
+@keyframes animate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+}
 
 /* Estilo para dispositivos móviles */
 @media (max-width: 480px) {
@@ -450,12 +606,12 @@ ion-button.water-button {
 
   .bateria1 { 
     display: none;
-   }
+  }
 
 
    //Botones tabla
 
-   ion-button.water-button {
+  ion-button.water-button {
     width: 4rem; 
     height: 3rem; 
     padding: 0;
