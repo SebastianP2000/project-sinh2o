@@ -41,7 +41,7 @@ export class InstalacionPage implements OnInit {
       this.cuadrantes = data.map((cuadrante: any) => ({
         ...cuadrante,
         showDetails: false,
-        sensor: cuadrante.sensor || null, 
+        sensor_id: null, 
       }));
     });
   }
@@ -54,27 +54,12 @@ export class InstalacionPage implements OnInit {
 
   showDetails(nombreCuadrante: string) {
     const cuadrante = this.cuadrantes.find(c => c.identificador === nombreCuadrante);
-  
     if (cuadrante) {
       this.selectedCuadrante = cuadrante;
-  
-      // Asegurarse de que el sensor tenga una ID
-      if (this.selectedCuadrante.sensor && this.selectedCuadrante.sensor_id) {
-        console.log('ID del sensor asignado:', this.selectedCuadrante.sensor_id);
-      } else {
-        console.log('No hay un sensor asignado con ID en este cuadrante.');
-      }
-  
-      console.log('Cuadrante seleccionado:', this.selectedCuadrante);
+      console.log('Cuadrante seleccionado:', this.selectedCuadrante); // Verifica el cuadrante seleccionado
       this.websocketService.startListeningForCuadrante(); // Comienza a escuchar datos para este cuadrante
     } else {
-      this.selectedCuadrante = {
-        identificador: nombreCuadrante,
-        ultima_irrigacion: null,
-        fecha_sensor_agregado: null,
-        tipo_planta: null,
-      };
-  
+      this.selectedCuadrante = { identificador: nombreCuadrante, ultima_irrigacion: null, fecha_sensor_agregado: null, tipo_planta: null };
       this.websocketService.stopListening(); // Detén la escucha si no hay cuadrante
     }
   }
@@ -156,65 +141,60 @@ export class InstalacionPage implements OnInit {
 
   listenForUpdates() {
     this.websocketService.datosSubject.subscribe((data) => {
-        console.log('Datos recibidos del WebSocket:', data); // Verificar los datos completos
-
-        // Manejar datos del sensor para cuadrantes
-        if (this.selectedCuadrante && data.identificador === this.selectedCuadrante.identificador) {
-            this.selectedCuadrante.sensor = this.selectedCuadrante.sensor || {}; // Asegurarse de que existe un objeto para el sensor
-
-            if (data.temperatura !== undefined) {
-                this.selectedCuadrante.sensor.temperatura = data.temperatura;
-                console.log('Temperatura del sensor actualizada:', this.selectedCuadrante.sensor.temperatura);
-            } else {
-                this.selectedCuadrante.sensor.temperatura = null; // Si no hay datos, establecer en null
-            }
-
-            if (data.humedad !== undefined) {
-                this.selectedCuadrante.sensor.humedad = data.humedad;
-                console.log('Humedad del sensor actualizada:', this.selectedCuadrante.sensor.humedad);
-            } else {
-                this.selectedCuadrante.sensor.humedad = null; // Si no hay datos, establecer en null
-            }
+      console.log('Datos recibidos del WebSocket:', data);
+  
+      // Manejar datos del sensor para cuadrantes
+      if (this.selectedCuadrante && data.identificador === this.selectedCuadrante.identificador) {
+        this.selectedCuadrante.sensor = this.selectedCuadrante.sensor || {}; // Asegurarse de que existe un objeto para el sensor
+  
+        // Asignar sensor_id
+        if (data.sensor_id) {
+          this.selectedCuadrante.sensor.sensor_id = data.sensor_id;
+          console.log('sensor_id actualizado:', this.selectedCuadrante.sensor.sensor_id); // Verifica si el sensor_id se asigna
         }
-
-        // Manejar datos de los estanques
-        if (data.nombre) {
-            const estanqueActualizado = this.estanques.find((e) => e.nombre === data.nombre);
-
-            if (estanqueActualizado) {
-                if (data.capacidad_actual !== undefined) {
-                    estanqueActualizado.capacidad_actual = data.capacidad_actual;
-                    console.log('Capacidad actual del estanque actualizada:', estanqueActualizado.capacidad_actual);
-                } else {
-                    estanqueActualizado.capacidad_actual = null;
-                }
-
-                if (data.capacidad_maxima !== undefined) {
-                    estanqueActualizado.capacidad_maxima = data.capacidad_maxima;
-                    console.log('Capacidad máxima del estanque actualizada:', estanqueActualizado.capacidad_maxima);
-                } else {
-                    estanqueActualizado.capacidad_maxima = null;
-                }
-
-                // Actualizar batería si se tienen datos de capacidad
-                if (estanqueActualizado.capacidad_actual !== undefined && estanqueActualizado.capacidad_maxima !== undefined) {
-                    this.actualizarBateria(estanqueActualizado.capacidad_actual, estanqueActualizado.capacidad_maxima);
-                }
-            }
-        }
-
-        // Actualizar temperatura y humedad globalmente si están presentes
+  
         if (data.temperatura !== undefined) {
-            this.temperatura = data.temperatura;
-            console.log('Temperatura global actualizada:', this.temperatura);
+          this.selectedCuadrante.sensor.temperatura = data.temperatura;
+          console.log('Temperatura del sensor actualizada:', this.selectedCuadrante.sensor.temperatura);
+        } else {
+          this.selectedCuadrante.sensor.temperatura = null; // Si no hay datos, establecer en null
         }
-
+  
         if (data.humedad !== undefined) {
-            this.humedad = data.humedad;
-            console.log('Humedad global actualizada:', this.humedad);
+          this.selectedCuadrante.sensor.humedad = data.humedad;
+          console.log('Humedad del sensor actualizada:', this.selectedCuadrante.sensor.humedad);
+        } else {
+          this.selectedCuadrante.sensor.humedad = null; // Si no hay datos, establecer en null
         }
+      }
+  
+      // Manejar datos de los estanques
+      if (data.nombre) {
+        const estanqueActualizado = this.estanques.find((e) => e.nombre === data.nombre);
+  
+        if (estanqueActualizado) {
+          if (data.capacidad_actual !== undefined) {
+            estanqueActualizado.capacidad_actual = data.capacidad_actual;
+            console.log('Capacidad actual del estanque actualizada:', estanqueActualizado.capacidad_actual);
+          } else {
+            estanqueActualizado.capacidad_actual = null;
+          }
+  
+          if (data.capacidad_maxima !== undefined) {
+            estanqueActualizado.capacidad_maxima = data.capacidad_maxima;
+            console.log('Capacidad máxima del estanque actualizada:', estanqueActualizado.capacidad_maxima);
+          } else {
+            estanqueActualizado.capacidad_maxima = null;
+          }
+  
+          // Actualizar batería si se tienen datos de capacidad
+          if (estanqueActualizado.capacidad_actual !== undefined && estanqueActualizado.capacidad_maxima !== undefined) {
+            this.actualizarBateria(estanqueActualizado.capacidad_actual, estanqueActualizado.capacidad_maxima);
+          }
+        }
+      }
     });
-}
+  }
 
 guardarTipoPlanta(cuadrante: any): void {
   if (cuadrante && cuadrante.tipo_planta) {

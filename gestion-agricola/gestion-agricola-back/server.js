@@ -59,7 +59,7 @@ wss.on('connection', (ws) => {
                     capacidad_maxima: estanque.capacidad_maxima
                 })),
                 sensores: sensores.map(sensor => ({
-                    nombre: sensor.nombre,
+                    sensor_id: sensor.sensor_id,
                     temperatura: sensor.temperatura,
                     humedad: sensor.humedad,
                     identificador: sensor.identificador
