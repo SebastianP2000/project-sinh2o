@@ -43,54 +43,63 @@ const wss = new WebSocket.Server({ server });
 const connectedClients = [];
 
 wss.on('connection', (ws) => {
-    console.log('Nuevo cliente conectado a WebSocket');
-    connectedClients.push(ws);
-    const sendDataFromDatabase = async () => {
-        try {
-            // Obtener estanques y sensores de la base de datos
-            const estanques = await Estanque.find();
-            const sensores = await Sensor.find();
+  console.log('Nuevo cliente conectado a WebSocket');
+  connectedClients.push(ws);
 
-            // Formatear los datos para enviar
-            const datosParaEnviar = {
-                estanques: estanques.map(estanque => ({
-                    nombre: estanque.nombre,
-                    capacidad_actual: estanque.capacidad_actual,
-                    capacidad_maxima: estanque.capacidad_maxima
-                })),
-                sensores: sensores.map(sensor => ({
-                    sensor_id: sensor.sensor_id,
-                    temperatura: sensor.temperatura,
-                    humedad: sensor.humedad,
-                    identificador: sensor.identificador
-                }))
-            };
+  // Función para enviar los datos actuales de sensores y estanques
+  const sendDataFromDatabase = async () => {
+    try {
+        const estanques = await Estanque.find();
+        const sensores = await Sensor.find();
 
+        // Verificar si el sensor está asignado
+        const datosParaEnviar = {
+            estanques: estanques.map(estanque => ({
+                nombre: estanque.nombre,
+                capacidad_actual: estanque.capacidad_actual,
+                capacidad_maxima: estanque.capacidad_maxima
+            })),
+            sensores: sensores.map(sensor => ({
+                sensor_id: sensor.sensor_id,
+                temperatura: sensor.temperatura || 'No disponible', // Valor por defecto si no hay sensor
+                humedad: sensor.humedad || 'No disponible', // Valor por defecto si no hay sensor
+                identificador: sensor.identificador
+            }))
+        };
 
-            connectedClients.forEach(client => {
-                if (client.readyState === WebSocket.OPEN) {
-                  client.send(JSON.stringify(datosParaEnviar));
-                }
-              });
-            } catch (error) {
-              console.error('Error al obtener datos de la base de datos:', error);
+        connectedClients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify(datosParaEnviar));
             }
-    };
+        });
+    } catch (error) {
+        console.error('Error al obtener datos de la base de datos:', error);
+    }
+};
 
-    // Enviar datos al cliente cuando se conecta
-    sendDataFromDatabase();
+  // Detecta cambios en la colección de sensores
+  Sensor.watch().on('change', (change) => {
+    console.log('Cambio detectado en sensor:', change);
+    sendDataFromDatabase(); // Enviar datos al haber un cambio
+  });
 
-    const intervalId = setInterval(sendDataFromDatabase, 2000); // Actualizar cada 2 segundos
+  // Detecta cambios en la colección de estanques
+  Estanque.watch().on('change', (change) => {
+    console.log('Cambio detectado en estanque:', change);
+    sendDataFromDatabase(); // Enviar datos al haber un cambio
+  });
 
-    // Manejar la desconexión del cliente
-    ws.on('close', () => {
-        console.log('Cliente desconectado de WebSocket');
-        clearInterval(intervalId);
-        const index = connectedClients.indexOf(ws);
-        if (index !== -1) {
-          connectedClients.splice(index, 1); // Elimina el cliente desconectado
-        }
-      });
+  // Enviar datos iniciales al cliente cuando se conecta
+  sendDataFromDatabase();
+
+  // Manejo de la desconexión del cliente
+  ws.on('close', () => {
+    console.log('Cliente desconectado de WebSocket');
+    const index = connectedClients.indexOf(ws);
+    if (index !== -1) {
+      connectedClients.splice(index, 1); // Elimina el cliente desconectado
+    }
+  });
 });
 
 // Conectar a MongoDB

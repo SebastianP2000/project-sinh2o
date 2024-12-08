@@ -65,4 +65,15 @@ export class AuthService {
     return this.http.get(`${this.apiUrlsensor}?sector=${sector}`);
   }
 
+  asignarSensor(idSensor: string, sector: string): Observable<any> {
+    return this.http.put(`${this.apiUrlsensor}/asignarSensor/${idSensor}`, { sector });
+  }
+
+  quitarSensor(idSensor: string): Observable<any> {
+    return this.http.put(`${this.apiUrlsensor}/quitarSensor/${idSensor}`, { identificador: null });
+  }
+
+  getSensoresNoAsignados(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrlsensor}/noAsignados`);
+  }
 }

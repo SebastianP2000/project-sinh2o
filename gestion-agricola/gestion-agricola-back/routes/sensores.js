@@ -58,4 +58,76 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.put('/quitarSensor/:id', async (req, res) => {
+    try {
+        const sensor = await Sensor.findById(req.params.id);
+        if (!sensor) {
+            return res.status(404).json({ message: 'Sensor no encontrado' });
+        }
+
+        // Poner el identificador a null
+        sensor.identificador = null;
+
+        const actualizado = await sensor.save();
+
+        // Emitir a WebSocket
+        const datosParaEnviar = {
+            sensor: actualizado,  // Solo el sensor actualizado
+        };
+
+        connectedClients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify(datosParaEnviar));
+            }
+        });
+
+        res.json(actualizado);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+// Ruta para asignar sensor
+router.put('/asignarSensor/:id', async (req, res) => {
+    try {
+        const { identificador } = req.body;
+
+        const sensor = await Sensor.findById(req.params.id);
+        if (!sensor) {
+            return res.status(404).json({ message: 'Sensor no encontrado' });
+        }
+
+        // Asignar el identificador al sensor
+        sensor.identificador = identificador;
+
+        const actualizado = await sensor.save();
+
+        // Emitir a WebSocket
+        const datosParaEnviar = {
+            sensor: actualizado,  // Solo el sensor actualizado
+        };
+
+        connectedClients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify(datosParaEnviar));
+            }
+        });
+
+        res.json(actualizado);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+// Ruta para obtener sensores no asignados
+router.get('/noAsignados', async (req, res) => {
+    try {
+        const sensoresNoAsignados = await Sensor.find({ identificador: null });
+
+        res.json(sensoresNoAsignados);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 module.exports = router;

@@ -10,9 +10,11 @@ export class WebsocketService {
   public datosSubject: Subject<any> = new Subject<any>();
   sensores: any[] = [];
   estanques: any[] = [];
-  isConnected: boolean = false; 
+  isConnected: boolean = false;
   private listeningForCuadrante: boolean = false;
   private listeningForEstanque: boolean = false;
+  private reconnectionAttempts: number = 0;
+  private maxReconnectionAttempts: number = 5; // Limite de intentos de reconexión
 
   constructor() {}
 
@@ -23,30 +25,18 @@ export class WebsocketService {
     this.socket.onopen = () => {
       console.log('Conectado al servidor WebSocket');
       this.isConnected = true;
+      this.reconnectionAttempts = 0; // Restablecer el contador de intentos
     };
 
     this.socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log('Datos recibidos del WebSocket:', data); // Log para verificar datos recibidos
+      console.log('Datos recibidos del WebSocket:', data);
   
       if (data && data.estanques && data.sensores) {
-        this.estanques = data.estanques; // Almacena los estanques en el array
-        this.sensores = data.sensores; // Almacena los sensores en el array
+        this.estanques = data.estanques;
+        this.sensores = data.sensores;
 
-        // Emitir datos de estanques
-        this.estanques.forEach((estanque) => {
-          console.log('Estanque:', estanque);
-          if (this.isConnected && this.listeningForEstanque) {
-            this.datosSubject.next(estanque);
-          }
-        });
-
-        // Emitir datos de sensores
-        this.sensores.forEach((sensor) => {
-          if (sensor.identificador && this.isConnected && this.listeningForCuadrante) {
-            this.datosSubject.next(sensor);
-          }
-        });
+        this.emitData();
       } else {
         console.error('Datos inválidos recibidos:', data);
       }
@@ -55,9 +45,11 @@ export class WebsocketService {
     this.socket.onclose = () => {
       console.log('Conexión cerrada, intentando reconectar...');
       this.isConnected = false;
-      // Solo reconectar si es necesario
-      if (this.listeningForCuadrante || this.listeningForEstanque) {
+      if (this.reconnectionAttempts < this.maxReconnectionAttempts) {
+        this.reconnectionAttempts++;
         setTimeout(() => this.connect(), 1000);
+      } else {
+        console.warn('Máximo número de intentos de reconexión alcanzado');
       }
     };
 
@@ -66,28 +58,44 @@ export class WebsocketService {
     };
   }
 
-  startListeningForCuadrante() {
-    if (!this.isConnected) {
-      this.connect(); // Solo conectar si no estamos conectados
+  private emitData() {
+    if (this.isConnected) {
+      this.estanques.forEach((estanque) => {
+        if (this.listeningForEstanque) {
+          this.datosSubject.next(estanque);
+        }
+      });
+
+      this.sensores.forEach((sensor) => {
+        if (sensor.identificador && this.listeningForCuadrante) {
+          this.datosSubject.next(sensor);
+        }
+      });
     }
+  }
+
+  startListeningForCuadrante() {
     this.listeningForCuadrante = true;
     this.listeningForEstanque = false;
+    if (!this.isConnected) {
+      this.connect(); // Conectar si no estamos conectados
+    }
   }
 
   startListeningForEstanque() {
-    if (!this.isConnected) {
-      this.connect(); // Solo conectar si no estamos conectados
-    }
     this.listeningForEstanque = true;
     this.listeningForCuadrante = false;
+    if (!this.isConnected) {
+      this.connect(); // Conectar si no estamos conectados
+    }
   }
 
   stopListening() {
-    this.isConnected = false; // Detener la emisión de datos
+    this.isConnected = false;
     this.listeningForCuadrante = false;
     this.listeningForEstanque = false;
 
-    // Cerrar la conexión WebSocket si no se está escuchando
+    // Cerrar la conexión solo si no estamos escuchando
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.close();
       console.log('Conexión WebSocket cerrada.');
@@ -95,10 +103,34 @@ export class WebsocketService {
   }
 
   sendMessage(message: string) {
-    if (this.isConnected) {
+    this.checkConnection(() => {
       this.socket.send(message);
+    });
+  }
+
+  sendUpdatedCuadranteData(cuadrante: any): void {
+    this.checkConnection(() => {
+      const message = {
+        type: 'cuadranteActualizado',
+        cuadrante: cuadrante,
+      };
+      this.socket.send(JSON.stringify(message));
+      console.log('Enviado al WebSocket:', message);
+    });
+  }
+
+  private checkConnection(callback: () => void) {
+    if (this.isConnected) {
+      callback();
     } else {
-      console.warn('No está conectado al WebSocket.');
+      console.warn('No está conectado al WebSocket. Intentando reconectar...');
+      // Intentar reconectar con un retraso
+      setTimeout(() => {
+        if (!this.isConnected) {
+          this.connect();
+          this.checkConnection(callback);  // Volver a comprobar la conexión después de intentar reconectar
+        }
+      }, 1000);
     }
   }
 }
