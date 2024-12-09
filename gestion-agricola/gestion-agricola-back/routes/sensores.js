@@ -5,8 +5,8 @@ const router = express.Router();
 
 // Crear un nuevo sensor
 router.post('/crear', async (req, res) => {
-    const { sector, temperatura, humedad, estado } = req.body;
-    const sensor = new Sensor({ sector, temperatura, humedad, estado });
+    const { sensor_id, fecha_evento, humedad, identificador, temperatura } = req.body;
+    const sensor = new Sensor({ sensor_id, fecha_evento, humedad, identificador, temperatura });
 
     try {
         const nuevoSensor = await sensor.save();
@@ -32,11 +32,11 @@ router.put('/:id', async (req, res) => {
         const sensor = await Sensor.findById(req.params.id);
         if (!sensor) return res.status(404).json({ message: 'Sensor no encontrado' });
 
-        sensor.sector = req.body.sector || sensor.sector;
-        sensor.temperatura = req.body.temperatura || sensor.temperatura;
+        sensor.sensor_id = req.body.sensor_id || sensor.sensor_id;
+        sensor.fecha_evento = req.body.fecha_evento || sensor.fecha_evento;
         sensor.humedad = req.body.humedad || sensor.humedad;
-        sensor.estado = req.body.estado !== undefined ? req.body.estado : sensor.estado;
-        sensor.fecha_registro = req.body.fecha_registro || sensor.fecha_registro;
+        sensor.identificador = req.body.identificador || sensor.identificador;
+        sensor.temperatura = req.body.temperatura || sensor.temperatura;
 
         const actualizado = await sensor.save();
         res.json(actualizado);
@@ -58,61 +58,38 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.put('/quitarSensor/:id', async (req, res) => {
+router.put('/quitarSensor/:sensorId', async (req, res) => {
     try {
-        const sensor = await Sensor.findById(req.params.id);
+        const sensor = await Sensor.findOne({ sensor_id: req.params.sensorId }); // Busca por sensor_id, no por _id
         if (!sensor) {
             return res.status(404).json({ message: 'Sensor no encontrado' });
         }
 
-        // Poner el identificador a null
+        // Asegúrate de que el identificador se ponga como null
         sensor.identificador = null;
-
         const actualizado = await sensor.save();
-
-        // Emitir a WebSocket
-        const datosParaEnviar = {
-            sensor: actualizado,  // Solo el sensor actualizado
-        };
-
-        connectedClients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(datosParaEnviar));
-            }
-        });
-
         res.json(actualizado);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
 });
-
-// Ruta para asignar sensor
-router.put('/asignarSensor/:id', async (req, res) => {
+// Ruta para asignar sensor a un identificador
+router.put('/asignarSensor/:sensorId', async (req, res) => {
     try {
-        const { identificador } = req.body;
+        const { sensorId } = req.params;
+        const { identificador } = req.body; // El identificador del cuadrante
 
-        const sensor = await Sensor.findById(req.params.id);
+        // Buscar el sensor por el sensorId
+        const sensor = await Sensor.findOne({ sensor_id: sensorId });
         if (!sensor) {
             return res.status(404).json({ message: 'Sensor no encontrado' });
         }
 
-        // Asignar el identificador al sensor
+        // Asignar el identificador del cuadrante al sensor
         sensor.identificador = identificador;
 
+        // Guardar el sensor actualizado
         const actualizado = await sensor.save();
-
-        // Emitir a WebSocket
-        const datosParaEnviar = {
-            sensor: actualizado,  // Solo el sensor actualizado
-        };
-
-        connectedClients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(datosParaEnviar));
-            }
-        });
-
         res.json(actualizado);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -123,7 +100,6 @@ router.put('/asignarSensor/:id', async (req, res) => {
 router.get('/noAsignados', async (req, res) => {
     try {
         const sensoresNoAsignados = await Sensor.find({ identificador: null });
-
         res.json(sensoresNoAsignados);
     } catch (err) {
         res.status(500).json({ message: err.message });

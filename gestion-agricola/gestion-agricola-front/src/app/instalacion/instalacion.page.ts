@@ -11,6 +11,7 @@ import { WebsocketService } from '../services/websocket.service';
 export class InstalacionPage implements OnInit {
   cuadrantes: any[] = [];
   estanques: any[] = [];
+  sensoresSinAsignar: any[] = [];
   selectedCuadrante: any;
   selectedEstanque: any;
 
@@ -30,6 +31,7 @@ export class InstalacionPage implements OnInit {
     this.cargarCuadrantes();
     this.cargarEstanques();
     this.listenForUpdates();
+    this.obtenerSensoresSinAsignar();
   }
 
   navigateBack() {
@@ -152,20 +154,6 @@ export class InstalacionPage implements OnInit {
           this.selectedCuadrante.sensor.sensor_id = data.sensor_id;
           console.log('sensor_id actualizado:', this.selectedCuadrante.sensor.sensor_id); // Verifica si el sensor_id se asigna
         }
-  
-        if (data.temperatura !== undefined) {
-          this.selectedCuadrante.sensor.temperatura = data.temperatura;
-          console.log('Temperatura del sensor actualizada:', this.selectedCuadrante.sensor.temperatura);
-        } else {
-          this.selectedCuadrante.sensor.temperatura = null; // Si no hay datos, establecer en null
-        }
-  
-        if (data.humedad !== undefined) {
-          this.selectedCuadrante.sensor.humedad = data.humedad;
-          console.log('Humedad del sensor actualizada:', this.selectedCuadrante.sensor.humedad);
-        } else {
-          this.selectedCuadrante.sensor.humedad = null; // Si no hay datos, establecer en null
-        }
       }
   
       // Manejar datos de los estanques
@@ -216,11 +204,11 @@ guardarTipoPlanta(cuadrante: any): void {
 
 assignSensorToCuadrante(cuadrante: any, sensor: any): void {
   if (cuadrante && sensor) {
-    cuadrante.sensor = sensor; // Asigna el sensor al cuadrante
+    // Asignar el sensor al cuadrante
     console.log('Sensor asignado al cuadrante:', cuadrante.identificador);
 
-    // Actualizar el cuadrante en la base de datos (si es necesario)
-    this.authService.updateCuadrante(cuadrante._id, { sensor: sensor })
+    // Enviar la solicitud para asignar el sensor al cuadrante
+    this.authService.asignarSensor(cuadrante, sensor.sensor_id)  // Usar el sensor_id del sensor
       .subscribe(
         (response) => {
           console.log('Cuadrante actualizado después de asignar el sensor:', response);
@@ -236,49 +224,45 @@ assignSensorToCuadrante(cuadrante: any, sensor: any): void {
       );
   }
 }
-loadCuadrantes() {
-  this.authService.getCuadrantes().subscribe(
-    (cuadrantes) => {
-      this.cuadrantes = cuadrantes;
-      console.log('Cuadrantes cargados:', cuadrantes);
-    },
-    (error) => {
-      console.error('Error al cargar cuadrantes:', error);
-    }
-  );
-}
-removeSensorFromCuadrante(cuadrante: any): void {
-  if (cuadrante && cuadrante.sensor) {
-    // Detener la escucha de WebSocket para evitar sobrescribir los cambios
-    this.websocketService.stopListening();
-
-    // Desasignar el sensor
-    cuadrante.sensor = null;
-
-    // Actualizar en el backend
-    this.authService.updateCuadrante(cuadrante._id, { sensor: null })
-      .subscribe(
-        (response) => {
-          console.log('Cuadrante actualizado después de desasignar el sensor:', response);
-
-          // Actualizar la vista localmente con el nuevo estado
-          this.selectedCuadrante.sensor = null;
-          alert('Sensor desasignado exitosamente.');
-
-          // Recargar cuadrantes y volver a escuchar WebSocket
-          this.loadCuadrantes(); // Método que recarga todos los cuadrantes si es necesario
-          this.websocketService.startListeningForCuadrante(); // Reanudar la escucha de WebSocket
-
-          // Emitir al WebSocket el cambio de desasignación
-          this.websocketService.sendUpdatedCuadranteData(cuadrante); // Método para emitir los datos actualizados al WebSocket
-        },
-        (error) => {
-          console.error('Error al desasignar el sensor:', error);
-          alert('No se pudo desasignar el sensor.');
-          // Reanudar la escucha de WebSocket si hubo un error
-          this.websocketService.startListeningForCuadrante();
-        }
-      );
+  loadCuadrantes() {
+    this.authService.getCuadrantes().subscribe(
+      (cuadrantes) => {
+        this.cuadrantes = cuadrantes;
+        console.log('Cuadrantes cargados:', cuadrantes);
+      },
+      (error) => {
+        console.error('Error al cargar cuadrantes:', error);
+      }
+    );
   }
-}
+  removeSensorFromCuadrante(cuadrante: any): void {
+    if (!cuadrante.sensor || !cuadrante.sensor.sensor_id) {
+      alert('No hay un sensor asignado al cuadrante.');
+      return; 
+    }
+  
+    this.authService.quitarSensor(cuadrante.sensor.sensor_id).subscribe(
+      (response) => {
+        console.log('Sensor desasignado exitosamente:', response);
+        cuadrante.sensor = null;
+        this.websocketService.sendUpdatedCuadranteData(cuadrante);
+      },
+      (error) => {
+        console.error('Error al desasignar el sensor:', error);
+        alert('No se pudo desasignar el sensor.');
+      }
+    );
+  }
+  obtenerSensoresSinAsignar(): void {
+    this.authService.getSensoresNoAsignados().subscribe(
+      (sensores) => {
+        this.sensoresSinAsignar = sensores; // Guarda los sensores sin asignar
+        console.log('Sensores sin asignar:', this.sensoresSinAsignar); // Verifica los sensores
+      },
+      (error) => {
+        console.error('Error al obtener sensores sin asignar:', error);
+      }
+    );
+  }
+
 }

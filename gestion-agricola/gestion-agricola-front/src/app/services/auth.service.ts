@@ -12,7 +12,7 @@ export class AuthService {
   private apiUrlRegister = `${environment.apiUrl}/auth/register`;
   private apiUrlcuadrante = `${environment.apiUrl}/cuadrantes`;
   private apiUrlestanques = `${environment.apiUrl}/estanques`;
-  private apiUrlsensor = `${environment.apiUrl}/sensor`;
+  private apiUrlsensor = `${environment.apiUrl}/sensores`;
   private apiUrluser = `${environment.apiUrl}/auth`;
 
   constructor(private http: HttpClient) {}
@@ -61,12 +61,17 @@ export class AuthService {
   }
 
   // Métodos de sensores
-  getSensores(sector: string): Observable<any> {
-    return this.http.get(`${this.apiUrlsensor}?sector=${sector}`);
+
+  getSensores(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrlsensor);
+  }
+
+  getSensoresPorSector(sector: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrlsensor}?sector=${sector}`);
   }
 
   asignarSensor(idSensor: string, sector: string): Observable<any> {
-    return this.http.put(`${this.apiUrlsensor}/asignarSensor/${idSensor}`, { sector });
+    return this.http.put(`${this.apiUrlsensor}/asignarSensor/${idSensor}`, { identificador: sector });
   }
 
   quitarSensor(idSensor: string): Observable<any> {
