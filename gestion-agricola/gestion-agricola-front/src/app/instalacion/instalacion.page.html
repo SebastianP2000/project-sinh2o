@@ -53,16 +53,25 @@
     </div>
   </ion-item-group>
 
-  <!-- Detalles del cuadrante seleccionado -->
-  <div *ngIf="selectedCuadrante" class="cuadrante-details centered-card">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>
-          Detalles de {{ selectedCuadrante.identificador }}
-        </ion-card-title>
-      </ion-card-header>
+ <!-- Detalles del cuadrante seleccionado -->
+<div *ngIf="selectedCuadrante" class="cuadrante-details centered-card">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Detalles de {{ selectedCuadrante.identificador }}
+      </ion-card-title>
+    </ion-card-header>
 
-      <ion-card-content>
+    <ion-card-content>
+      <!-- Si el cuadrante no existe, mostrar botón de crear -->
+      <div *ngIf="!selectedCuadrante._id">
+        <ion-button expand="block" fill="outline" (click)="crearCuadrante(selectedCuadrante)">
+          Crear Cuadrante
+        </ion-button>
+      </div>
+
+      <!-- Mostrar opciones de asignación de sensor solo si el cuadrante existe -->
+      <div *ngIf="selectedCuadrante._id">
         <!-- Verificar si tiene un sensor asignado -->
         <div *ngIf="selectedCuadrante.sensor; else noSensor">
           <p><strong>Sensor Asignado:</strong> Sí</p>
@@ -78,24 +87,23 @@
             Guardar Cambios
           </ion-button>
 
-          <!-- Botón para quitar el sensor -->
           <ion-button expand="block" fill="outline" color="danger" (click)="removeSensorFromCuadrante(selectedCuadrante)">
             Quitar Sensor
           </ion-button>
         </div>
 
-        <!-- Mensaje si no tiene sensor -->
         <ng-template #noSensor>
           <p>No hay sensor asignado a este cuadrante.</p>
           <ion-button expand="block" fill="outline" (click)="assignSensorToCuadrante(selectedCuadrante, sensoresSinAsignar[0])">
             Asignar Sensor
           </ion-button>
         </ng-template>
-      </ion-card-content>
+      </div>
+    </ion-card-content>
 
-      <ion-button fill="outline" size="small" (click)="closeDetails()">
-        Cerrar Información
-      </ion-button>
-    </ion-card>
-  </div>
+    <ion-button fill="outline" size="small" (click)="closeDetails()">
+      Cerrar Información
+    </ion-button>
+  </ion-card>
+</div>
 </ion-content>

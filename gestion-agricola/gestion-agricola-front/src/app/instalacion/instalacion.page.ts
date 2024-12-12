@@ -228,6 +228,28 @@ assignSensorToCuadrante(cuadrante: any, sensor: any): void {
     alert('Faltan datos para asignar el sensor.');
   }
 }
+
+crearCuadrante(cuadranteData: any) {
+  const nuevoCuadrante = {
+    identificador: cuadranteData.identificador,
+    tipo_planta: "Sin asignar",  // Valor por defecto
+    sensor_id: null
+  };
+
+  this.authService.crearCuadrante(nuevoCuadrante).subscribe(
+    (response) => {
+      console.log('Cuadrante creado:', response);
+      this.selectedCuadrante = response;
+      this.cargarCuadrantes();
+      alert('Cuadrante creado exitosamente');
+    },
+    (error) => {
+      console.error('Error al crear cuadrante:', error);
+      alert('Error al crear el cuadrante: ' + error.error.message);
+    }
+  );
+}
+
   loadCuadrantes() {
     this.authService.getCuadrantes().subscribe(
       (cuadrantes) => {
