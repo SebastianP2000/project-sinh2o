@@ -53,6 +53,11 @@ export class AuthService {
   updateCuadrante(id: string, data: any): Observable<any> {
     return this.http.put(`${this.apiUrlcuadrante}/${id}`, data);
   }
+
+  crearCuadrante(cuadrante: any): Observable<any> {
+    return this.http.post(`${this.apiUrlcuadrante}/crear`, cuadrante);
+  }
+  
   
 
   // Métodos de estanques

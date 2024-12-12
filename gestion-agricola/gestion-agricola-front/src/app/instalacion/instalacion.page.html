@@ -87,7 +87,7 @@
         <!-- Mensaje si no tiene sensor -->
         <ng-template #noSensor>
           <p>No hay sensor asignado a este cuadrante.</p>
-          <ion-button expand="block" fill="outline" (click)="assignSensorToCuadrante(selectedCuadrante, { sensor_id: null, temperatura: null, humedad: null })">
+          <ion-button expand="block" fill="outline" (click)="assignSensorToCuadrante(selectedCuadrante, sensoresSinAsignar[0])">
             Asignar Sensor
           </ion-button>
         </ng-template>

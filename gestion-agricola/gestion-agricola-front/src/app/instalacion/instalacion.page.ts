@@ -184,6 +184,7 @@ export class InstalacionPage implements OnInit {
     });
   }
 
+  
 guardarTipoPlanta(cuadrante: any): void {
   if (cuadrante && cuadrante.tipo_planta) {
     this.authService.updateCuadrante(cuadrante._id, { tipo_planta: cuadrante.tipo_planta })
@@ -203,25 +204,28 @@ guardarTipoPlanta(cuadrante: any): void {
 }
 
 assignSensorToCuadrante(cuadrante: any, sensor: any): void {
-  if (cuadrante && sensor) {
+  if (cuadrante && sensor && cuadrante.identificador && sensor.sensor_id) {
     // Asignar el sensor al cuadrante
-    console.log('Sensor asignado al cuadrante:', cuadrante.identificador);
+    console.log('Asignando sensor al cuadrante:', cuadrante.identificador);
 
-    // Enviar la solicitud para asignar el sensor al cuadrante
-    this.authService.asignarSensor(cuadrante, sensor.sensor_id)  // Usar el sensor_id del sensor
+    // Llamar al servicio de asignación
+    this.authService.asignarSensor(sensor.sensor_id, cuadrante.identificador)
       .subscribe(
         (response) => {
           console.log('Cuadrante actualizado después de asignar el sensor:', response);
           alert('Sensor asignado exitosamente.');
 
           // Emitir los datos actualizados al WebSocket
-          this.websocketService.sendUpdatedCuadranteData(cuadrante); // Emite al WebSocket
+          this.websocketService.sendUpdatedCuadranteData(cuadrante); // Emite los datos al WebSocket
         },
         (error) => {
           console.error('Error al asignar el sensor al cuadrante:', error);
           alert('No se pudo asignar el sensor.');
         }
       );
+  } else {
+    console.error('Error: cuadrante o sensor no válidos');
+    alert('Faltan datos para asignar el sensor.');
   }
 }
   loadCuadrantes() {
