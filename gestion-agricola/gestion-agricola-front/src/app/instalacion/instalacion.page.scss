@@ -1,2 +1,13 @@
 @import '../sectores/sectores.page.scss';
 
+@media (max-width: 1200px) {
+    .boton_media {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .boton_media {
+        display: none;
+    }
+}

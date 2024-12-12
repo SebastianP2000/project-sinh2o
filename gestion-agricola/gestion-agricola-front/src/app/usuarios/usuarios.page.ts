@@ -28,18 +28,17 @@ export class UsuariosPage implements OnInit {
   }
 
   loadUsers() {
-    this.isLoading = true;
     this.authService.getUsers().subscribe({
       next: (data) => {
         this.users = data;
-        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error al cargar usuarios:', err);
-        this.isLoading = false;
+        this.showToast('Error al cargar los usuarios');
       },
     });
   }
+  
   // Método para eliminar un usuario
   async deleteUser(userId: string) {
     const alert = await this.alertCtrl.create({

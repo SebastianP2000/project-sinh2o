@@ -5,13 +5,15 @@
       <ion-button class="button" fill="clear" (click)="navigateBack()"><ion-icon name="arrow-back"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <!-- Agregar logo en la esquina superior derecha -->
-  <img src="../../assets/icon/Logo.png" alt="Logo" class="logo-image" />
 </ion-header>
 
 
-<ion-content [fullscreen]="true" class="user-page">
+<ion-content [fullscreen]="true" class="">
+  <div>
+    <img src="../../assets/icon/Logo.png" alt="Logo" class="logo-image" />
+  </div>
   
+  <div class="user-page">
   <img src="../../assets/img/background.png" class="background-image" />
   <div class="v1_4"></div>
   <ion-header collapse="condense">
@@ -19,10 +21,9 @@
       <ion-title size="large">usuarios</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-loading [isOpen]="isLoading" message="Cargando usuarios..."></ion-loading>
   
   <!-- Si hay usuarios, muestra la tabla -->
-  <ion-card *ngIf="!isLoading && users.length > 0">
+  <ion-card *ngIf="users.length > 0">
     <ion-card-header>
       <ion-card-title>Usuarios Registrados</ion-card-title>
     </ion-card-header>
@@ -50,10 +51,11 @@
   </ion-card>
 
   <!-- Si no hay usuarios, mostrar mensaje -->
-  <ion-card *ngIf="!isLoading && users.length === 0">
+  <ion-card *ngIf="users.length === 0">
     <ion-card-header>
       <ion-card-title>No hay usuarios registrados</ion-card-title>
     </ion-card-header>
   </ion-card>
   
+</div>
 </ion-content>

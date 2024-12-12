@@ -6,6 +6,18 @@
     align-items: center;
     position: relative; /* Para permitir que el fondo se coloque correctamente */
   }
+
+  .logo-image {
+    height: 200px;
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    top: 150px;
+}
   
   .background {
     background-image: url('/assets/img/background.png') !important; /* Ruta desde la raíz */
@@ -19,12 +31,8 @@
   }
   
   .logo-container {
-    text-align: center; /* Centra el logo */
-    margin-bottom: 30px; /* Espacio inferior para el logo */
-  }
-  
-  .logo {
-    max-width: 200px; /* Tamaño máximo para el logo */
+    text-align: center; 
+    margin-bottom: 30px; 
   }
   
   .input-item {

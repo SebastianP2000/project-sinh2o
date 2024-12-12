@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController  } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-menu',
@@ -9,7 +10,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class MenuPage  {
 
-  constructor(private router: Router, private alertController: AlertController) { }
+  constructor(private router: Router, private alertController: AlertController, private loadingController: LoadingController) { }
 
   async logout() {
     const alert = await this.alertController.create({
@@ -18,34 +19,79 @@ export class MenuPage  {
       buttons: [
         {
           text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {}
+          role: 'cancel'
         },
         {
           text: 'Cerrar Sesión',
-          handler: () => {
-            localStorage.removeItem('token');  // Eliminar el token del localStorage
-            this.router.navigate(['/login']);  // Redirigir al login
+          handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Cerrando sesión...',
+              spinner: 'circular'
+            });
+            await loading.present();
+            
+            setTimeout(() => {
+              localStorage.removeItem('token');
+              loading.dismiss();
+              this.router.navigate(['/login']);
+            }, 800);
           }
         }
       ]
     });
 
-    await alert.present();  // Mostrar el alert
+    await alert.present();
   }
 
-  navigateToSectores() {
-    this.router.navigate(['/sectores']);
-  }
-  navigateTocreate() {
-    this.router.navigate(['/crearusuario']);
-  }
-  navigateTouser(){
-    this.router.navigate(['/usuarios'])
+  async navigateToSectores() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando sectores...',
+      spinner: 'circular'
+    });
+    await loading.present();
+    
+    setTimeout(() => {
+      loading.dismiss();
+      this.router.navigate(['/sectores']);
+    }, 800);
   }
 
-  navigateToinstalacion() {
-    this.router.navigate(["/instalacion"])
+  async navigateTocreate() {
+    const loading = await this.loadingController.create({
+      spinner: 'circular'
+    });
+    await loading.present();
+    
+    setTimeout(() => {
+      loading.dismiss();
+      this.router.navigate(['/crearusuario']);
+    }, 800);
+  }
+
+  async navigateTouser() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando usuarios...',
+      spinner: 'circular'
+    });
+    await loading.present();
+    
+    setTimeout(() => {
+      loading.dismiss();
+      this.router.navigate(['/usuarios']);
+    }, 800);
+  }
+
+  async navigateToinstalacion() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando sensores...',
+      spinner: 'circular'
+    });
+    await loading.present();
+    
+    setTimeout(() => {
+      loading.dismiss();
+      this.router.navigate(['/instalacion']);
+    }, 800);
   }
 
 }

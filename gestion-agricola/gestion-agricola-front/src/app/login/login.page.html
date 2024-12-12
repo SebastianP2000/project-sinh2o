@@ -12,6 +12,14 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-md="6" size-lg="4">
+
+        <!-- Mensajes de error -->
+        <div class="error-message" *ngIf="showErrorMessage">
+          <ion-text color="danger">
+            {{ errorMessage }}
+          </ion-text>
+        </div>
+
         <!-- Campo de usuario -->
         <ion-item class="input-item">
           <ion-label position="floating">Usuario</ion-label>
