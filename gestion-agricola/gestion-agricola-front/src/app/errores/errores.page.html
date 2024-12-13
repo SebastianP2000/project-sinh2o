@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Errores</ion-title>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="navigateBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- Agregar logo en la esquina superior derecha -->
+    <img src="../../assets/icon/Logo.png" alt="Logo" class="logo-image" />
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <img src="../../assets/img/background.png" class="background-image" />
+  <div class="v1_4"></div>
+
+  <ion-card class="error-history">
+    <ion-card-header>
+      <ion-card-title>Eventos</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let historial of historiales">
+          <ion-label>
+            <h2>{{historial.tipo_evento | titlecase}}</h2>
+            <p>{{historial.descripcion}}</p>
+            <p>{{historial.fecha_evento | date:'medium'}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

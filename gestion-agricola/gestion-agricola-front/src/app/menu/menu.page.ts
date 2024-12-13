@@ -81,6 +81,19 @@ export class MenuPage  {
     }, 800);
   }
 
+  async navigateToerrores() {
+    const loading = await this.loadingController.create({
+      message: 'Identificando errores...',
+      spinner: 'circular'
+    });
+    await loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+      this.router.navigate(['/errores']);
+    }, 800);
+  }
+
   async navigateToinstalacion() {
     const loading = await this.loadingController.create({
       message: 'Cargando sensores...',

@@ -94,8 +94,26 @@
 
         <ng-template #noSensor>
           <p>No hay sensor asignado a este cuadrante.</p>
-          <ion-button expand="block" fill="outline" (click)="assignSensorToCuadrante(selectedCuadrante, sensoresSinAsignar[0])">
+                  
+          <ion-item>
+            <ion-label>Seleccionar Sensor</ion-label>
+            <ion-select placeholder="Seleccione un sensor" [(ngModel)]="sensorSeleccionado">
+              <ion-select-option *ngFor="let sensor of sensoresSinAsignar" [value]="sensor">
+                {{ sensor.sensor_id }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        
+          <ion-button expand="block" fill="outline" 
+            (click)="assignSensorToCuadrante(selectedCuadrante, sensorSeleccionado)"
+            [disabled]="!sensorSeleccionado">
             Asignar Sensor
+          </ion-button>
+        
+          <!-- Add the delete button here -->
+          <ion-button expand="block" fill="outline" color="danger" 
+            (click)="eliminarCuadrante(selectedCuadrante)">
+            Eliminar Cuadrante
           </ion-button>
         </ng-template>
       </div>

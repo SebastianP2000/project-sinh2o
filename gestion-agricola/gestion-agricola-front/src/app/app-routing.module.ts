@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'instalacion',
     loadChildren: () => import('./instalacion/instalacion.module').then( m => m.InstalacionPageModule)
   },
+  {
+    path: 'errores',
+    loadChildren: () => import('./errores/errores.module').then( m => m.ErroresPageModule)
+  },
 
 
 

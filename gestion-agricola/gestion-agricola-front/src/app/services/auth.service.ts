@@ -14,6 +14,7 @@ export class AuthService {
   private apiUrlestanques = `${environment.apiUrl}/estanques`;
   private apiUrlsensor = `${environment.apiUrl}/sensores`;
   private apiUrluser = `${environment.apiUrl}/auth`;
+  private apiUrlHistorial = `${environment.apiUrl}/historial`;
 
   constructor(private http: HttpClient) {}
 
@@ -57,8 +58,15 @@ export class AuthService {
   crearCuadrante(cuadrante: any): Observable<any> {
     return this.http.post(`${this.apiUrlcuadrante}/crear`, cuadrante);
   }
+
+  deleteCuadrante(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrlcuadrante}/${id}`);
+  }
   
-  
+  //Metodos de historial
+  getHistoriales(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrlHistorial);
+  }
 
   // Métodos de estanques
   getEstanques(): Observable<any> {
