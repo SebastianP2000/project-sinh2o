@@ -29,6 +29,9 @@ const unsigned long intervaloFlujo = 500;         // Intervalo de 500 ms para ve
 
 bool solenoideAbierto = false; // Estado del solenoide
 
+// ID del sensor (puedes cambiarlo según sea necesario)
+String sensor_id = "sensor3"; // Este es el identificador del sensor
+
 void setup() {
   // Inicialización de la comunicación serial
   Serial.begin(9600);
@@ -61,7 +64,7 @@ void loop() {
     if (isnan(humedad) || isnan(temperatura)) {
       Serial.println("Error al leer el sensor DHT11");
     } else {
-      String data = "{\"temperatura\": " + String(temperatura) + ", \"humedad\": " + String(humedad);
+      String data = "{\"sensor_id\": \"" + sensor_id + "\", \"temperatura\": " + String(temperatura) + ", \"humedad\": " + String(humedad);
       
       // Lectura del sensor HC-SR04 cada 1 segundo
       if (tiempoActual - ultimaLecturaUltrasonido >= intervaloUltrasonido) {
@@ -76,8 +79,8 @@ void loop() {
         
         // Agregar el dato de cantidad de agua en litros
         data += ", \"capacidad_actual\": " + String(litros) + "}";
-
-        // Imprimir los datos
+        
+        // Imprimir los datos con sensor_id
         Serial.println(data);
         
         // Control del solenoide y la bomba según el nivel de agua (invertido)
@@ -161,7 +164,6 @@ void verificarFlujo() {
 
 // Función para registrar un evento
 void registrarEvento(String tipo, String descripcion) {
-  String evento = "{\"tipo_evento\": \"" + tipo + "\", \"descripcion\": \"" + descripcion + "\", \"fecha_evento\": \"" + String(millis()) + "\"}";
+  String evento = "{\"sensor_id\": \"" + sensor_id + "\", \"tipo_evento\": \"" + tipo + "\", \"descripcion\": \"" + descripcion + "\", \"fecha_evento\": \"" + String(millis()) + "\"}";
   Serial.println(evento);
 }
-
