@@ -112,7 +112,7 @@ th, td {
 }
 .v1_347 {
   width: 205px;
-  height: 408px;
+  height: 395px;
   background: rgba(7,25,31,0.5299999713897705);
   opacity: 1;
   position: relative;
@@ -135,6 +135,50 @@ th, td {
   font-size: 20px;
   opacity: 1;
   text-align: center;
+}
+
+.predicciones-card-media {
+  display: none;
+}
+
+.predicciones-card {
+  position: absolute;
+  left: 0px;
+  top: 370px;
+  width: 205px;
+  background: transparent !important;
+  border-radius: 15px;
+  box-shadow: none;
+  --background: transparent;
+  --border-width: 0;
+  --border-style: none;
+
+  ion-card-header {
+    padding: 10px;
+    background: transparent;
+    
+    ion-card-title {
+      font-size: 16px;
+      color: #ffffff;
+      text-align: center;
+    }
+  }
+
+  ion-card-content {
+    padding: 10px;
+    color: #ffffff;
+    background: transparent;
+    
+    h2 {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 12px;
+      margin: 5px 0;
+    }
+  }
 }
 
 .v1_350 {
@@ -377,6 +421,14 @@ ion-button.water-button {
 /* Estilo para dispositivos tablet */
 @media (max-width: 1200px) {
 
+  .predicciones-card-media {
+    display: block;
+  }
+
+  .predicciones-card {
+    display: none;
+  }
+
   .extra-space {
     display: none;
   }
@@ -520,6 +572,14 @@ ion-button.water-button {
 
 /* Estilo para dispositivos móviles */
 @media (max-width: 480px) {
+
+  .predicciones-card-media {
+    display: block;
+  }
+
+  .predicciones-card {
+    display: none;
+  }
 
   .extra-space {
     display: none;

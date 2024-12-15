@@ -28,6 +28,36 @@
       <span class="liquid"></span>
       <span class="btn-txt">{{ estanque.nombre }}</span>
     </ion-button>
+
+    <ion-card class="predicciones-card-media">
+      <ion-card-header>
+        <ion-card-title>Predicciones del Sistema</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="prediccionesTemperaturaHumedad">
+          <h2>Próximas 24 horas:</h2>
+          <p>
+            <strong>Temperatura esperada:</strong> 
+            {{ prediccionesTemperaturaHumedad.temperatura_predicha | number:'1.1-1' }}°C
+          </p>
+          <p>
+            <strong>Humedad esperada:</strong>
+            {{ prediccionesTemperaturaHumedad.humedad_predicha | number:'1.1-1' }}%
+          </p>
+        </div>
+        
+        <div *ngIf="prediccionesConsumo">
+          <p>
+            <strong>Consumo de agua estimado:</strong>
+            {{ prediccionesConsumo.consumo_predicho | number:'1.1-1' }} litros
+          </p>
+        </div>
+    
+        <div *ngIf="!prediccionesTemperaturaHumedad && !prediccionesConsumo">
+          <p>Cargando predicciones...</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
     
 
     <!-- Tabla de Cuadrantes -->
@@ -142,5 +172,35 @@
       <ion-button fill="outline" size="small" (click)="closeDetailsE()">Cerrar Información</ion-button>
     </ion-card>
   </div>
+
+  <ion-card class="predicciones-card">
+    <ion-card-header>
+      <ion-card-title>Predicciones del Sistema</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngIf="prediccionesTemperaturaHumedad">
+        <h2>Próximas 24 horas:</h2>
+        <p>
+          <strong>Temperatura esperada:</strong> 
+          {{ prediccionesTemperaturaHumedad.temperatura_predicha | number:'1.1-1' }}°C
+        </p>
+        <p>
+          <strong>Humedad esperada:</strong>
+          {{ prediccionesTemperaturaHumedad.humedad_predicha | number:'1.1-1' }}%
+        </p>
+      </div>
+      
+      <div *ngIf="prediccionesConsumo">
+        <p>
+          <strong>Consumo de agua:</strong>
+          {{ prediccionesConsumo.consumo_predicho | number:'1.1-1' }} litros
+        </p>
+      </div>
+  
+      <div *ngIf="!prediccionesTemperaturaHumedad && !prediccionesConsumo">
+        <p>Cargando predicciones...</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>

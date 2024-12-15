@@ -19,7 +19,7 @@ async function fetchWaterData() {
       .map(d => ({
         capacidad_maxima: d.capacidad_maxima,
         capacidad_anterior: d.capacidad_anterior,
-        consumo: d.capacidad_maxima - d.capacidad_anterior, // Calculamos el consumo de agua
+        consumo: Math.abs(d.capacidad_maxima - d.capacidad_anterior), 
       }))
       .filter(d => d.capacidad_maxima != null && d.capacidad_anterior != null && d.consumo > 0); // Filtramos valores nulos y consumos válidos
 

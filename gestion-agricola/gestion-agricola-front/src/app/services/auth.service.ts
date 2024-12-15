@@ -15,6 +15,7 @@ export class AuthService {
   private apiUrlsensor = `${environment.apiUrl}/sensores`;
   private apiUrluser = `${environment.apiUrl}/auth`;
   private apiUrlHistorial = `${environment.apiUrl}/historial`;
+  private apiUrlPredicciones = `${environment.apiUrl}/prediction`;
 
   constructor(private http: HttpClient) {}
 
@@ -93,5 +94,15 @@ export class AuthService {
 
   getSensoresNoAsignados(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrlsensor}/noAsignados`);
+  }
+
+  // Métodos de predicciones
+
+  getPredictionsTH(): Observable<any> {
+    return this.http.post(`${this.apiUrlPredicciones}/predictTH`, {});
+  }
+
+  getPredictionsW(): Observable<any> {
+    return this.http.post(`${this.apiUrlPredicciones}/predictW`, {});
   }
 }

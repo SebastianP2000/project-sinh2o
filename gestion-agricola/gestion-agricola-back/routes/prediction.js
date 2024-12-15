@@ -11,8 +11,10 @@ const HistorialEstanque = require('../models/Hestanques');
 router.post('/predictTH', async (req, res) => {
   try {
     // Obtener todos los datos de temperatura y humedad desde MongoDB
-    const sensorData = await HistorialSensor.find().sort({ fecha_evento: 1 }); // Obtenemos todos los registros de los sensores
-
+    console.log('Iniciando predicción T/H');
+    const sensorData = await HistorialSensor.find().sort({ fecha_evento: 1 });
+    console.log('Datos encontrados:', sensorData.length);
+    
     // Verificamos si encontramos datos
     if (!sensorData || sensorData.length === 0) {
       return res.status(400).send('No se encontraron datos de sensores');
@@ -43,15 +45,20 @@ router.post('/predictTH', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error en la predicción:', error);
-    res.status(500).send('Error en la predicción');
+    console.error('Error detallado en predicción T/H:', error);
+    res.status(500).json({
+      mensaje: 'Error en la predicción',
+      detalles: error.message
+    });
   }
 });
 
 router.post('/predictW', async (req, res) => {
   try {
     // Obtener todos los datos de los estanques desde MongoDB
+    console.log('Iniciando predicción estanque');
     const estanqueData = await HistorialEstanque.find().sort({ ultima_actualizacion: 1 });
+    console.log('Datos encontrados:', estanqueData.length);
 
     // Verificar si hay datos disponibles
     if (!estanqueData || estanqueData.length === 0) {
@@ -95,8 +102,11 @@ router.post('/predictW', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error en la predicción del estanque:', error);
-    res.status(500).send('Error en la predicción del estanque');
+    console.error('Error detallado en predicción estanque:', error);
+    res.status(500).json({
+      mensaje: 'Error en la predicción del estanque',
+      detalles: error.message
+    });
   }
 });
 
