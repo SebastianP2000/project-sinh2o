@@ -56,7 +56,7 @@
           <p>
             <strong>Estado de anomalías:</strong>
             <span *ngIf="prediccionesAnomalas; else noAnomalies">¡Anomalía detectada!</span>
-            <ng-template #noAnomalies>No se detectaron anomalías.</ng-template>
+            <ng-template #noAnomalies> No se detectaron anomalías.</ng-template>
           </p>
         </div>
     
@@ -181,11 +181,9 @@
   </div>
 
   <ion-card class="predicciones-card">
-    <ion-card-header>
-      <ion-card-title>Predicciones del Sistema</ion-card-title>
-    </ion-card-header>
     <ion-card-content>
       <div *ngIf="prediccionesTemperaturaHumedad">
+        <h2>Predicciones del Sistema</h2>
         <h2>Próximas 24 horas:</h2>
         <p>
           <strong>Temperatura esperada:</strong> 
@@ -201,6 +199,14 @@
         <p>
           <strong>Consumo de agua:</strong>
           {{ prediccionesConsumo.consumo_predicho | number:'1.1-1' }} litros
+        </p>
+      </div>
+
+      <div *ngIf="prediccionesAnomalas !== null">
+        <p>
+          <strong>Estado de anomalías:</strong>
+          <span *ngIf="prediccionesAnomalas; else noAnomalies">¡Anomalía detectada!</span>
+          <ng-template #noAnomalies> No se detectaron anomalías.</ng-template>
         </p>
       </div>
   
