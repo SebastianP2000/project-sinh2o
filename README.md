@@ -1,7 +1,10 @@
 # Proyecto SINH2O
 
 # Descripcion
-El proyecto SINH2O es
+El proyecto SINH2O es un sistema automatizado destinado a optimizar la gestión agrícola; 
+Utiliza sensores de humedad, temperatura, ultrasonicos y de flujo conectados a un controlador Arduino 
+junto con una base de datos no relacional en MongoDb, para monitorizar y gestionar con precisión los cultivos.
+El sistema incluye una aplicación web y una aplicación móvil.
 
 # Tecnologias
 - Python
