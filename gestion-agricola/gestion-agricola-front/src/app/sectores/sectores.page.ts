@@ -15,6 +15,8 @@ export class SectoresPage implements OnInit {
   selectedEstanque: any;
   prediccionesTemperaturaHumedad: any = null;
   prediccionesConsumo: any = null;
+  prediccionesAnomalas: boolean = false; 
+
 
   letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
   filas = [1, 2, 3, 4];
@@ -33,6 +35,7 @@ export class SectoresPage implements OnInit {
     this.cargarEstanques();
     this.listenForUpdates();
     this.obtenerPredicciones();
+    this.obtenerPrediccionesAnomalas();
   }
 
   navigateBack() {
@@ -114,6 +117,21 @@ export class SectoresPage implements OnInit {
       }
     });
   }
+
+    // Predicción anomalas 
+    obtenerPrediccionesAnomalas() {
+      this.authService.getPredictionA().subscribe({
+        next: (data) => {
+          this.prediccionesAnomalas = data.anomalyDetected;
+          console.log('Predicción de anomalías:', this.prediccionesAnomalas);
+        },
+        error: (err) => {
+          console.error('Error al obtener predicción de anomalías:', err);
+          this.prediccionesAnomalas = false;
+        }
+      });
+    }
+
 
   actualizarBateria(capacidadActual: number, capacidadMaxima: number) {
     if (!capacidadActual || !capacidadMaxima) return; // Manejo de valores nulos o indefinidos

@@ -45,11 +45,18 @@
             {{ prediccionesTemperaturaHumedad.humedad_predicha | number:'1.1-1' }}%
           </p>
         </div>
-        
         <div *ngIf="prediccionesConsumo">
           <p>
             <strong>Consumo de agua estimado:</strong>
             {{ prediccionesConsumo.consumo_predicho | number:'1.1-1' }} litros
+          </p>
+        </div>
+        <div *ngIf="prediccionesAnomalas !== null">
+          <h2>Predicción de Anomalías:</h2>
+          <p>
+            <strong>Estado de anomalías:</strong>
+            <span *ngIf="prediccionesAnomalas; else noAnomalies">¡Anomalía detectada!</span>
+            <ng-template #noAnomalies>No se detectaron anomalías.</ng-template>
           </p>
         </div>
     

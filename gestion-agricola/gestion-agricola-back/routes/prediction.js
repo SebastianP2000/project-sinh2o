@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const loadModel = require('../models/loadModel'); // Cargamos el modelo de temperatura y humedad
-const loadModelE = require('../models/loadModelE') //modelo estanque
+const loadModel = require('../models/loadModel');
+const loadModelE = require('../models/loadModelE'); 
 const tf = require('@tensorflow/tfjs-node');
 const HistorialSensor = require('../models/Hsensores'); // Modelo para historial de sensores
-const HistorialEstanque = require('../models/Hestanques'); 
+const HistorialEstanque = require('../models/Hestanques'); // Modelo para historial de estanques
+const sensores = require('../models/Sensores')
+const detectAnomaly = require('../models/detectAnomaly'); // Cargar la función de detección de anomalías
 
 
 // Endpoint para realizar predicciones temperatura y humedad
@@ -53,6 +55,7 @@ router.post('/predictTH', async (req, res) => {
   }
 });
 
+// Endpoint para realizar predicciones de consumo de agua de estanque
 router.post('/predictW', async (req, res) => {
   try {
     // Obtener todos los datos de los estanques desde MongoDB
@@ -107,6 +110,39 @@ router.post('/predictW', async (req, res) => {
       mensaje: 'Error en la predicción del estanque',
       detalles: error.message
     });
+  }
+});
+
+// Ruta para detectar anomalías
+router.post('/detectAnomaly', async (req, res) => {
+  try {
+    // Obtener todos los datos de temperatura y humedad desde la colección `sensores`
+    console.log('Obteniendo datos de sensores para detectar anomalías');
+    const sensoresData = await sensores.find().sort({ fecha_evento: 1 });  // Cambié `Hsensores` a `sensores`
+
+    // Verificar si se encontraron datos
+    if (!sensoresData || sensoresData.length === 0) {
+      return res.status(400).json({ mensaje: "No se encontraron datos de sensores para detectar anomalías" });
+    }
+
+    // Extraer los valores de temperatura y humedad de los sensores
+    const inputData = sensoresData.map(data => ({
+      temperatura: data.temperatura,
+      humedad: data.humedad
+    }));
+
+    console.log('Datos extraídos de la colección sensores:', inputData);
+
+    // Usar la función de detección de anomalías con los datos extraídos
+    const anomalyDetected = await detectAnomaly(inputData);
+
+    // Enviar la respuesta con el resultado
+    res.json({
+      anomalyDetected: anomalyDetected
+    });
+  } catch (error) {
+    console.error('Error al detectar anomalías:', error);
+    res.status(500).json({ mensaje: "Error al detectar anomalías", detalles: error.message });
   }
 });
 

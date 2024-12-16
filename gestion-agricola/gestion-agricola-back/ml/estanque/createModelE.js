@@ -1,7 +1,7 @@
 const tf = require('@tensorflow/tfjs-node');
 
 // Crear el modelo para predecir el consumo de agua
-function createWaterModel(inputShape = [2], layers = [{ units: 16, activation: 'relu' }, { units: 8, activation: 'relu' }], outputUnits = 1) {  // Cambiar a [2]
+function createWaterModel(inputShape = [2], layers = [{ units: 16, activation: 'relu' }, { units: 8, activation: 'relu' }], outputUnits = 1) {  
   const model = tf.sequential();
 
   // Capa de entrada

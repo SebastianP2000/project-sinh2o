@@ -105,4 +105,10 @@ export class AuthService {
   getPredictionsW(): Observable<any> {
     return this.http.post(`${this.apiUrlPredicciones}/predictW`, {});
   }
+
+  getPredictionA(): Observable<any> {
+    return this.http.post(`${this.apiUrlPredicciones}/detectAnomaly`, {});
+  }  
+
+
 }

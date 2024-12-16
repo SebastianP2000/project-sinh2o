@@ -19,7 +19,7 @@ async function trainModel() {
 
     // Crear el modelo
     const model = createModel([2], // Entradas: temperatura y humedad
-      [{ units: 16, activation: 'relu' }, { units: 8, activation: 'relu' }], // Capas ocultas
+      [{ units: 16, activation: 'relu' }, { units: 8, activation: 'relu' }],
       2 // Salidas: temperatura y humedad
     );
 
@@ -28,11 +28,11 @@ async function trainModel() {
     await model.fit(inputs, labels, {
       epochs: 50,
       batchSize: 32,
-      validationSplit: 0.2,  // Dividir los datos para validación
-      shuffle: true,  // Mezclar los datos antes de cada época
+      validationSplit: 0.2, 
+      shuffle: true,  
       verbose: 1,
       callbacks: [
-        tf.callbacks.earlyStopping({ monitor: 'loss', patience: 10 }),  // Detener si no mejora
+        tf.callbacks.earlyStopping({ monitor: 'loss', patience: 10 }),
       ],
     });
 

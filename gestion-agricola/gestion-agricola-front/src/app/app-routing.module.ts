@@ -27,13 +27,14 @@ const routes: Routes = [
   {
     path: 'usuarios',
     loadChildren: () => import('./usuarios/usuarios.module').then( m => m.UsuariosPageModule), canActivate: [AuthGuard]
-  },  {
+  },
+  {
     path: 'instalacion',
-    loadChildren: () => import('./instalacion/instalacion.module').then( m => m.InstalacionPageModule)
+    loadChildren: () => import('./instalacion/instalacion.module').then( m => m.InstalacionPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'errores',
-    loadChildren: () => import('./errores/errores.module').then( m => m.ErroresPageModule)
+    loadChildren: () => import('./errores/errores.module').then( m => m.ErroresPageModule), canActivate: [AuthGuard]
   },
 
 
